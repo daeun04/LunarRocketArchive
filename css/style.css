@@ -155,6 +155,7 @@ body {
   padding: 24px;
   box-sizing: border-box;
   max-width: 340px;        /* 너무 넓어져 그림 주변이 휑해지지 않게 최대 폭 제한 */
+  position: relative;      /* 모바일 "자세히 보기" 버튼을 카드 기준으로 배치 */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease; /* 애니메이션을 부드럽게 만드는 속성 */
   cursor: pointer;
@@ -210,6 +211,39 @@ body {
   font-size: 0.88rem;
   line-height: 1.4;
   margin: 0;
+}
+
+/* 모바일 전용 "자세히 보기" 버튼 (js/cards.js가 터치 기기에서만 만듦).
+   그림 오른쪽의 빈 공간에 띄워서, 나타날 때 카드 높이가 바뀌지 않게 함 */
+.detail-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: none;
+  color: #0b0f19;
+  background-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc88;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 12px;       /* 손가락으로 누르기 쉬운 크기 */
+}
+.rocket-card.is-selected .detail-btn {
+  display: block;
+}
+/* 선택된 카드는 테두리를 밝게 */
+.rocket-card.is-selected {
+  border-color: #00ffcc;
+  box-shadow: 0 0 15px #00ffcc66;
+}
+.fail-card.is-selected {
+  border-color: #ff0055;
+  box-shadow: 0 0 15px #ff005566;
+}
+.fail-card .detail-btn {
+  background-color: #ff0055;
+  box-shadow: 0 0 10px #ff005588;
+  color: #fff;
 }
 
 /* 실패한 로켓 카드 스타일 포인트 */

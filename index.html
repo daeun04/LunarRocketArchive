@@ -55,11 +55,13 @@
         </div>
 
         <!-- 로켓 카드 영역: 분류를 고르면 js/sidebar.js가 묶음별로 다시 배치 -->
+        <!-- 카드의 data-detail에 상세 페이지 주소를 적으면 연결됨 (예: data-detail="detail/apollo.html").
+             PC: 카드 클릭 → 바로 이동 / 모바일: 탭 → 모션 + "자세히 보기" 버튼 → 버튼 탭 → 이동 -->
         <div id="archive-view">
         <div class="rocket-grid">
             
             <!-- 카드 1: 스푸트니크 1호 -->
-            <div class="rocket-card" data-year="1957" data-type="인공위성" data-country="소련" data-aos="fade-up">
+            <div class="rocket-card" data-year="1957" data-type="인공위성" data-country="소련" data-detail="" data-aos="fade-up">
                 <svg class="rocket-icon-img px-sputnik" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="스푸트니크 1호">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M3 3h1v1h-1zM8 7h1v1h-1zM5 13h1v1h-1zM27 22h1v1h-1zM24 28h1v1h-1z"/>
@@ -81,7 +83,7 @@
             </div>
 
             <!-- 카드 2: 루나 탐사선 -->
-            <div class="rocket-card" data-year="1959" data-type="무인 탐사선" data-country="소련" data-aos="fade-up">
+            <div class="rocket-card" data-year="1959" data-type="무인 탐사선" data-country="소련" data-detail="" data-aos="fade-up">
                 <svg class="rocket-icon-img px-luna" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="루나 탐사선">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M27 3h1v1h-1zM11 6h1v1h-1zM3 14h1v1h-1zM29 14h1v1h-1zM8 19h1v1h-1z"/>
@@ -121,7 +123,7 @@
             </div>
 
             <!-- 카드 3: 새턴 V -->
-            <div class="rocket-card" data-year="1967" data-type="로켓" data-country="미국" data-aos="fade-up">
+            <div class="rocket-card" data-year="1967" data-type="로켓" data-country="미국" data-detail="" data-aos="fade-up">
                 <svg class="rocket-icon-img px-saturn" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="새턴 V">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M3 4h1v1h-1zM27 6h1v1h-1zM26 15h1v1h-1zM5 18h1v1h-1zM29 26h1v1h-1z"/>
@@ -147,7 +149,7 @@
             </div>
 
             <!-- 카드 4: N1 로켓 (실패작) -->
-            <div class="rocket-card fail-card" data-year="1969" data-type="로켓" data-country="소련" data-aos="fade-up">
+            <div class="rocket-card fail-card" data-year="1969" data-type="로켓" data-country="소련" data-detail="" data-aos="fade-up">
                 <svg class="rocket-icon-img px-n1" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="소련 N1 로켓">
                   <g class="smoke">
                     <path fill="#8a8f9c" d="M25 19h1v1h-1zM2 20h1v1h-1zM24 20h3v1h-3zM1 21h3v1h-3zM23 21h5v1h-5zM0 22h5v1h-5zM24 22h5v1h-5zM1 23h5v1h-5zM25 23h3v1h-3zM2 24h3v1h-3zM26 24h1v1h-1zM3 25h1v1h-1zM5 27h1v1h-1zM23 27h1v1h-1zM4 28h4v1h-4zM22 28h4v1h-4zM5 29h3v1h-3zM23 29h3v1h-3zM5 30h3v1h-3zM23 30h3v1h-3z"/>
@@ -202,7 +204,7 @@
             </div>
 
             <!-- 카드 5: 아폴로 미션 -->
-            <div class="rocket-card" data-year="1969" data-type="유인 우주선" data-country="미국" data-aos="fade-up">
+            <div class="rocket-card" data-year="1969" data-type="유인 우주선" data-country="미국" data-detail="" data-aos="fade-up">
                 <svg class="rocket-icon-img px-apollo" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="아폴로 미션, 달 위를 걷는 두 우주비행사">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M5 1h1v1h-1zM16 3h1v1h-1zM11 5h1v1h-1zM28 8h1v1h-1zM2 9h1v1h-1zM1 14h1v1h-1zM31 16h1v1h-1z"/>
@@ -269,7 +271,7 @@
             </div>
 
             <!-- 카드 6: 팰컨 9 -->
-            <div class="rocket-card" data-year="2010" data-type="로켓" data-country="미국">
+            <div class="rocket-card" data-year="2010" data-type="로켓" data-country="미국" data-detail="">
                 <svg class="rocket-icon-img px-falcon9" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="스페이스X 팰컨 9">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M26 3h1v1h-1zM4 5h1v1h-1zM25 12h1v1h-1zM7 16h1v1h-1zM28 24h1v1h-1zM3 26h1v1h-1z"/>
