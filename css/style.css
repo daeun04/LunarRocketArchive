@@ -105,8 +105,17 @@ body {
 }
 
 /* 메인 영역 및 소개글 */
+/* 본문: 왼쪽 세로줄(버튼 폭)은 버튼 아래로 비워 두고 가운데에 제목·카드.
+   오른쪽에도 같은 폭의 빈 세로줄을 둬서 좌우 여백을 맞춤 */
+.page-body {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  column-gap: 20px;
+  align-items: start;
+  padding: 24px 26px 40px;
+}
 .rocket-container {
-  padding: 40px;
+  min-width: 0;
 }
 
 .intro-text {
@@ -119,7 +128,10 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
   text-shadow: 0 0 8px rgba(116, 144, 139, 0.4); /* 과하지 않은 은은한 네온 발광 */
-  margin-bottom: 10px;
+  margin: 0 0 10px;
+  min-height: 40px;        /* 왼쪽 사이드바 버튼과 같은 높이에서 */
+  display: flex;
+  align-items: center;     /* 세로 가운데를 맞춤 */
 }
 
 .intro-text p {
@@ -128,10 +140,11 @@ body {
 
 /* ★ 핵심: 로켓 카드 가로 정렬 (Flexbox) */
 .rocket-grid {
-  display: flex;           /* 가로 배치를 위한 속성 */
-  flex-wrap: wrap;         /* 화면이 좁아지면 자연스럽게 다음 줄로 넘어감 */
+  display: grid;
+  /* 카드는 최소 260px, 남는 폭은 카드들이 나눠 가짐 → 오른쪽에 빈 공간이 크게 남지 않음.
+     화면이 넓어지면 한 줄에 들어가는 카드 수가 자동으로 늘어남 */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 24px;               /* 카드와 카드 사이 간격 */
-  justify-content: flex-start;
 }
 
 /* 각 로켓 카드 디자인 */
@@ -140,7 +153,8 @@ body {
   border: 1px solid #00ffcc44;
   border-radius: 8px;
   padding: 24px;
-  width: 240px;            /* 카드의 가로 너비 고정 */
+  box-sizing: border-box;
+  max-width: 340px;        /* 너무 넓어져 그림 주변이 휑해지지 않게 최대 폭 제한 */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease; /* 애니메이션을 부드럽게 만드는 속성 */
   cursor: pointer;
@@ -154,7 +168,7 @@ body {
 }
 
 /* 마우스 올렸을 때: 픽셀 로켓 아이콘이 더 높이 발사되는 모션 */
-.rocket-card:hover .rocket-icon {
+.rocket-card.is-playing .rocket-icon {
   transform: translateY(-8px) scale(1.1);
 }
 
@@ -165,21 +179,22 @@ body {
 }
 
 .rocket-icon-img {
-  width: 60px;
-  height: 60px;
+  display: block;          /* 글자 줄 기준선 때문에 그림 아래 생기는 빈틈 제거 */
+  width: 104px;
+  height: 104px;
   object-fit: contain;
   image-rendering: pixelated;
   margin-bottom: 12px;
   transition: transform 0.3s ease;
 }
 
-.rocket-card:hover .rocket-icon-img {
+.rocket-card.is-playing .rocket-icon-img {
   transform: translateY(-8px) scale(1.1);
 }
 
 .rocket-card h3 {
   color: #fff;
-  margin: 10px 0 6px 0;
+  margin: 0 0 8px 0;
   font-size: 1.2rem;
 }
 
@@ -187,7 +202,7 @@ body {
   display: inline-block;
   font-size: 0.8rem;
   color: #ff007f;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .rocket-card p {
@@ -206,12 +221,224 @@ body {
   border-color: #ff0055;
   box-shadow: 0 0 15px #ff005566;
 }
-/* ===== 픽셀 아이콘 hover 애니메이션 =====
+/* ===== 분류 사이드바 ===== */
+/* 본문 왼쪽 세로줄 맨 위에 놓이는 사이드바 열기 버튼 (메뉴 버튼과 같은 네온 테두리) */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid #00ffcc66;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.sidebar-toggle:hover,
+.sidebar-toggle[aria-expanded="true"] {
+  background-color: #00ffcc;
+  color: #0b0f19;
+  box-shadow: 0 0 10px #00ffcc;
+}
+/* 픽셀 느낌의 세 줄 아이콘: 가운데 줄 하나에 그림자 두 개로 위아래 줄을 그림 */
+.toggle-bars {
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
+}
+
+/* 왼쪽에서 밀려 나오는 패널. 닫혀 있을 땐 화면 왼쪽 밖에 숨어 있음 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  width: 280px;
+  max-width: 85vw;
+  box-sizing: border-box;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(7, 9, 15, 0.97);
+  border-right: 2px solid #00ffcc55;
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.15);
+  transform: translateX(-100%);
+  visibility: hidden;      /* 닫혀 있을 땐 화면 끝에 그림자가 비치지 않게 숨김 */
+  transition: transform 0.3s ease, visibility 0s 0.3s;
+}
+.sidebar.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.3s ease;
+}
+
+/* 사이드바가 열리면 나머지 화면을 어둡게 덮음 (누르면 닫힘) */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.sidebar-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #00ffcc33;
+}
+.sidebar-title {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px #00ffcc;
+}
+.sidebar-close {
+  background: none;
+  border: 1px solid #00ffcc44;
+  color: #00ffcc;
+  font: inherit;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.sidebar-close:hover {
+  border-color: #00ffcc;
+  box-shadow: 0 0 8px #00ffcc66;
+}
+
+/* 사이드바 안의 모든 버튼 공통 */
+.sidebar-all,
+.sidebar-group-title,
+.sidebar-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.sidebar-all:hover,
+.sidebar-group-title:hover,
+.sidebar-item:hover {
+  background-color: #00ffcc1a;
+}
+/* 지금 보고 있는 분류 */
+.sidebar [aria-current="true"] {
+  border-left-color: #00ffcc;
+  background-color: #00ffcc22;
+  color: #fff;
+}
+
+.sidebar-all {
+  color: #cbd5e0;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1px solid #00ffcc44;
+  border-left-width: 3px;
+}
+
+.sidebar-group {
+  margin-bottom: 20px;
+}
+.sidebar-group-title {
+  color: #00ffcc;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 12px;
+}
+.sidebar-sub {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #ff007f;
+  letter-spacing: 1px;
+}
+.sidebar-group ul {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0 0 0 12px;
+  border-left: 1px dashed #00ffcc33;
+}
+.sidebar-item {
+  color: #a0aec0;
+  font-size: 0.9rem;
+  padding: 7px 12px;
+}
+.sidebar-count,
+.group-count {
+  font-size: 0.75rem;
+  color: #00ffcc;
+  border: 1px solid #00ffcc44;
+  padding: 1px 6px;
+}
+
+/* 분류해서 볼 때 위쪽에 나오는 "지금 보는 분류" 표시줄 */
+.view-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.view-bar[hidden] {
+  display: none;
+}
+.view-label {
+  color: #ff007f;
+  text-shadow: 0 0 5px #ff007f88;
+}
+.view-reset {
+  background: none;
+  border: 1px solid #00ffcc66;
+  color: #fff;
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.view-reset:hover {
+  background-color: #00ffcc;
+  color: #0b0f19;
+}
+
+/* 묶음 제목 (예: 1960년대 3) */
+.rocket-group {
+  margin-top: 28px;
+}
+.group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #befff3;
+  font-size: 1.2rem;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #00ffcc33;
+}
+
+/* ===== 픽셀 아이콘 애니메이션 =====
+   카드에 is-playing 클래스가 붙으면 재생됨 (붙이고 떼는 건 js/cards.js 담당).
+   마우스가 있는 기기에선 마우스를 올렸을 때, 터치 기기에선 카드가 화면에 보일 때·탭할 때 재생. */
    steps(1)로 키프레임 사이를 뚝뚝 끊어서 1픽셀 단위로 움직이는 느낌을 냄.
    SVG 안에서 1px = 픽셀 1칸. */
 
 /* 별 반짝임 (모든 카드 공통) */
-.rocket-card:hover .rocket-icon-img .stars {
+.rocket-card.is-playing .rocket-icon-img .stars {
   animation: px-twinkle 0.6s steps(1, end) infinite;
 }
 @keyframes px-twinkle {
@@ -220,7 +447,7 @@ body {
 }
 
 /* 화염 깜빡임 (새턴 V, 팰컨 9 공통) */
-.rocket-card:hover .rocket-icon-img .flame {
+.rocket-card.is-playing .rocket-icon-img .flame {
   transform-origin: 16px 27px;
   animation: px-flicker 0.24s steps(1, end) infinite;
 }
@@ -231,7 +458,7 @@ body {
 }
 
 /* 스푸트니크 1호: 살짝 떨리다가 우상단으로 발사 → 좌하단에서 다시 날아 들어옴 */
-.rocket-card:hover .px-sputnik .ball {
+.rocket-card.is-playing .px-sputnik .ball {
   animation: sputnik-launch 1.4s steps(1, end);
 }
 @keyframes sputnik-launch {
@@ -251,7 +478,7 @@ body {
   94%  { transform: translate(-1px, 1px); }
   100% { transform: translate(0, 0); }
 }
-.rocket-card:hover .px-sputnik .signal {
+.rocket-card.is-playing .px-sputnik .signal {
   animation: sputnik-beep 0.3s steps(1, end) infinite;
 }
 @keyframes sputnik-beep {
@@ -260,7 +487,7 @@ body {
 }
 
 /* 새턴 V: 진동 → 수직 발사로 화면 밖 → 아래에서 다음 로켓이 올라옴 */
-.rocket-card:hover .px-saturn .rocket {
+.rocket-card.is-playing .px-saturn .rocket {
   animation: saturn-launch 1.6s steps(1, end);
 }
 @keyframes saturn-launch {
@@ -291,7 +518,7 @@ body {
 .px-n1 .shock {
   opacity: 0;
 }
-.rocket-card:hover .px-n1 .ignite {
+.rocket-card.is-playing .px-n1 .ignite {
   transform-origin: 15px 24px;
   animation: px-flicker 0.24s steps(1, end) infinite,
              n1-ignite 3.2s steps(1, end) forwards;
@@ -302,7 +529,7 @@ body {
   36%  { opacity: 0; }
   100% { opacity: 0; }
 }
-.rocket-card:hover .px-n1 .rocket {
+.rocket-card.is-playing .px-n1 .rocket {
   animation: n1-flight 3.2s steps(1, end) forwards;
 }
 @keyframes n1-flight {
@@ -323,7 +550,7 @@ body {
   55%  { opacity: 0; }
   100% { transform: translate(2px, 3px); opacity: 0; }
 }
-.rocket-card:hover .px-n1 .fault {
+.rocket-card.is-playing .px-n1 .fault {
   animation: n1-fault 3.2s steps(1, end) forwards;
 }
 @keyframes n1-fault {
@@ -334,7 +561,7 @@ body {
   35%  { opacity: 0; }
   100% { opacity: 0; }
 }
-.rocket-card:hover .px-n1 .shock {
+.rocket-card.is-playing .px-n1 .shock {
   transform-origin: 15px 26px;
   animation: n1-shock 3.2s steps(1, end) forwards;
 }
@@ -352,10 +579,10 @@ body {
 .px-n1 .stem {
   opacity: 0;
 }
-.rocket-card:hover .px-n1 .fire {
+.rocket-card.is-playing .px-n1 .fire {
   opacity: 0;
 }
-.rocket-card:hover .px-n1 .fireball {
+.rocket-card.is-playing .px-n1 .fireball {
   transform-origin: 15px 25px;
   animation: n1-fireball 3.2s steps(1, end) forwards;
 }
@@ -370,7 +597,7 @@ body {
   84%  { transform: translate(0, -10px) scale(1.3); }
   100% { transform: translate(0, -11px) scale(1.25); opacity: 1; }
 }
-.rocket-card:hover .px-n1 .stem {
+.rocket-card.is-playing .px-n1 .stem {
   transform-origin: 15px 32px;
   animation: n1-stem 3.2s steps(1, end) forwards;
 }
@@ -382,7 +609,7 @@ body {
   84%  { transform: scaleY(2.4); }
   100% { transform: scaleY(2.6); opacity: 1; }
 }
-.rocket-card:hover .px-n1 .smoke {
+.rocket-card.is-playing .px-n1 .smoke {
   transform-origin: 15px 26px;
   animation: n1-smoke 3.2s steps(1, end) forwards;
 }
@@ -394,7 +621,7 @@ body {
   88%  { transform: scale(1.2); }
   100% { transform: scale(1.25); opacity: 1; }
 }
-.rocket-card:hover .px-n1 .debris {
+.rocket-card.is-playing .px-n1 .debris {
   transform-origin: 15px 22px;
   animation: n1-debris 3.2s steps(1, end) forwards;
 }
@@ -412,7 +639,7 @@ body {
    위(화면 밖)에서 긴 역추진 불꽃을 뿜으며 천천히 내려오고, 고도가 낮아질수록 불꽃이
    짧고 옅어지다가 착지(85%) 순간 꺼지고 바닥에서 먼지가 살짝 일어남.
    바닥에 가까워질수록 1px 이동 간격이 길어져 감속하는 느낌. */
-.rocket-card:hover .px-falcon9 .rocket {
+.rocket-card.is-playing .px-falcon9 .rocket {
   animation: falcon-land 3.4s steps(1, end) forwards;
 }
 @keyframes falcon-land {
@@ -437,7 +664,7 @@ body {
 }
 /* 불꽃 길이/밝기: 처음에 가장 길고 점점 줄어들다 착지(85%)에 꺼짐.
    흔들림(px-flicker)은 안쪽 .flame이 계속 담당해서 길이 변화와 겹쳐 보임 */
-.rocket-card:hover .px-falcon9 .burn {
+.rocket-card.is-playing .px-falcon9 .burn {
   transform-origin: 16px 28px;
   animation: falcon-burn 3.4s steps(1, end) forwards;
 }
@@ -458,7 +685,7 @@ body {
 .px-falcon9 .dust {
   opacity: 0;
 }
-.rocket-card:hover .px-falcon9 .dust {
+.rocket-card.is-playing .px-falcon9 .dust {
   transform-origin: 16px 28px;
   animation: falcon-dust 3.4s steps(1, end) forwards;
 }
@@ -473,7 +700,7 @@ body {
 
 /* 루나 탐사선: 캡슐이 떨어져 에어백으로 두 번 튕긴 뒤 멈춤 →
    꽃잎 덮개가 열리고 → 안테나가 펴지며 → 신호 송신 */
-.rocket-card:hover .px-luna .probe {
+.rocket-card.is-playing .px-luna .probe {
   animation: luna-drop 3s steps(1, end) forwards;
 }
 @keyframes luna-drop {
@@ -492,7 +719,7 @@ body {
   56%  { transform: translate(0, 0); }
   100% { transform: translate(0, 0); }
 }
-.rocket-card:hover .px-luna .petals {
+.rocket-card.is-playing .px-luna .petals {
   transform-origin: 16px 24px;
   animation: luna-petals 3s steps(1, end) forwards;
 }
@@ -503,7 +730,7 @@ body {
   74%  { transform: scaleX(1); }
   100% { transform: scaleX(1); }
 }
-.rocket-card:hover .px-luna .antennas {
+.rocket-card.is-playing .px-luna .antennas {
   animation: luna-antennas 3s steps(1, end) forwards;
 }
 @keyframes luna-antennas {
@@ -511,7 +738,7 @@ body {
   82%  { opacity: 1; }
   100% { opacity: 1; }
 }
-.rocket-card:hover .px-luna .signal {
+.rocket-card.is-playing .px-luna .signal {
   animation: luna-signal 3s steps(1, end) forwards;
 }
 @keyframes luna-signal {
@@ -522,49 +749,146 @@ body {
   100% { opacity: 1; }
 }
 
-/* 아폴로 우주선: 상승단 이륙 화염은 평소엔 숨김 */
-.px-apollo .lift-flame {
+/* 아폴로 미션: 두 우주비행사가 달의 낮은 중력(지구의 1/6) 속에서 천천히 통통 뛰며 걸어감.
+   한 번 뛸 때 1.8초 — 포물선을 따라 느리게 떠올랐다가 꼭대기에서 잠시 머물고 내려옴.
+   평소엔 발을 모은 다리(legs-a)만 보이고, 공중에 뜬 동안엔 벌린 다리(legs-b)로 바뀜 */
+.px-apollo .legs-b {
   opacity: 0;
 }
-/* 상승단이 하강단을 달에 남기고 이륙 → 화면 밖으로. 그동안 사령·기계선은 궤도를 돎 */
-.rocket-card:hover .px-apollo .ascent {
-  animation: apollo-liftoff 2.4s steps(1, end) forwards;
+.rocket-card.is-playing .px-apollo .walker {
+  animation: apollo-hop 5.4s steps(1, end) forwards;
 }
-@keyframes apollo-liftoff {
-  0%   { transform: translate(0, 0); }
-  8%   { transform: translate(1px, 0); }
-  16%  { transform: translate(-1px, 0); }
-  24%  { transform: translate(0, -1px); }
-  32%  { transform: translate(0, -2px); }
-  40%  { transform: translate(0, -4px); }
-  48%  { transform: translate(0, -7px); }
-  56%  { transform: translate(0, -11px); }
-  64%  { transform: translate(1px, -16px); }
-  72%  { transform: translate(2px, -23px); }
-  80%  { transform: translate(3px, -32px); }
-  100% { transform: translate(3px, -32px); }
+.rocket-card.is-playing .px-apollo .legs-b {
+  animation: apollo-legs-air 5.4s steps(1, end) forwards;
 }
-.rocket-card:hover .px-apollo .lift-flame {
-  transform-origin: 16px 19px;
-  animation: px-flicker 0.24s steps(1, end) infinite,
-             apollo-flame-on 2.4s steps(1, end) forwards;
+.rocket-card.is-playing .px-apollo .legs-a {
+  animation: apollo-legs-ground 5.4s steps(1, end) forwards;
 }
-@keyframes apollo-flame-on {
-  0%   { opacity: 0; }
-  20%  { opacity: 1; }
+/* 두 번째 우주비행사는 반 박자 늦게 출발 */
+.rocket-card.is-playing .px-apollo .w2,
+.rocket-card.is-playing .px-apollo .w2 .legs-a,
+.rocket-card.is-playing .px-apollo .w2 .legs-b {
+  animation-delay: 0.9s;
+}
+@keyframes apollo-hop {
+  0%     { transform: translate(0px, 0px); }
+  2.7%   { transform: translate(0px, -2px); }
+  5.3%   { transform: translate(0px, -3px); }
+  8%     { transform: translate(1px, -4px); }
+  10.7%  { transform: translate(1px, -5px); }
+  18.7%  { transform: translate(1px, -4px); }
+  21.3%  { transform: translate(2px, -3px); }
+  24%    { transform: translate(2px, -2px); }
+  26.7%  { transform: translate(2px, 0px); }
+  33.3%  { transform: translate(2px, 0px); }
+  36%    { transform: translate(2px, -2px); }
+  38.7%  { transform: translate(2px, -3px); }
+  41.3%  { transform: translate(3px, -4px); }
+  44%    { transform: translate(3px, -5px); }
+  52%    { transform: translate(3px, -4px); }
+  54.7%  { transform: translate(4px, -3px); }
+  57.3%  { transform: translate(4px, -2px); }
+  60%    { transform: translate(4px, 0px); }
+  66.7%  { transform: translate(4px, 0px); }
+  69.3%  { transform: translate(4px, -2px); }
+  72%    { transform: translate(4px, -3px); }
+  74.7%  { transform: translate(5px, -4px); }
+  77.3%  { transform: translate(5px, -5px); }
+  85.3%  { transform: translate(5px, -4px); }
+  88%    { transform: translate(6px, -3px); }
+  90.7%  { transform: translate(6px, -2px); }
+  93.3%  { transform: translate(6px, 0px); }
+  100%   { transform: translate(6px, 0px); }
+}
+@keyframes apollo-legs-air {
+  0% { opacity: 1; }
+  26.7% { opacity: 0; }
+  33.3% { opacity: 1; }
+  60% { opacity: 0; }
+  66.7% { opacity: 1; }
+  93.3% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes apollo-legs-ground {
+  0% { opacity: 0; }
+  26.7% { opacity: 1; }
+  33.3% { opacity: 0; }
+  60% { opacity: 1; }
+  66.7% { opacity: 0; }
+  93.3% { opacity: 1; }
   100% { opacity: 1; }
 }
-.rocket-card:hover .px-apollo .csm {
-  animation: apollo-orbit 2.4s steps(12, end) forwards;
-}
-@keyframes apollo-orbit {
-  0%   { transform: translate(0, 0); }
-  100% { transform: translate(-12px, 0); }
+
+/* ===== 모바일 화면 (폭 640px 이하) ===== */
+@media (max-width: 640px) {
+  .cyber-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+  }
+  .header-left h1 {
+    font-size: 1.4rem;
+  }
+  .header-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .status-text {
+    width: 100%;          /* 상태 문구는 한 줄 차지, 버튼은 그 아래 줄에 */
+    margin-right: 0;
+  }
+
+  .page-body {
+    grid-template-columns: 36px 1fr 36px;
+    column-gap: 10px;
+    padding: 16px 10px 24px;
+  }
+  .sidebar-toggle {
+    width: 36px;
+    height: 36px;
+  }
+  .intro-text h2 {
+    min-height: 36px;
+  }
+  .intro-text {
+    margin-bottom: 24px;
+    word-break: keep-all;  /* 좁은 폭에서 '보관/소'처럼 단어 중간이 끊기지 않게 */
+  }
+  .intro-text h2 {
+    font-size: 1.35rem;
+  }
+  .intro-text p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* 카드를 화면 폭에 맞춰 2열로 (아주 좁은 화면에선 1열) */
+  .rocket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .rocket-card {
+    max-width: none;
+    padding: 16px;
+    word-break: keep-all;  /* 좁은 칸에서 '소/련'처럼 단어 중간이 끊기지 않게 */
+  }
+  .rocket-card h3 {
+    font-size: 1.05rem;
+  }
+  .rocket-card p {
+    font-size: 0.82rem;
+  }
 }
 
 /* 움직임 줄이기 설정을 켠 사용자에게는 애니메이션을 끔 */
 @media (prefers-reduced-motion: reduce) {
-  .rocket-card:hover .rocket-icon-img * {
+  .sidebar,
+  .sidebar-backdrop {
+    transition: none;
+  }
+  .rocket-card.is-playing .rocket-icon-img * {
     animation: none !important;
   }
 }
