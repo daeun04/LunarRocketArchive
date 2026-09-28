@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>새턴 V | Lunar Rocket Archive</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
 </head>
-<body>
+<body class="detail-body">
 
     <!-- 사이버펑크 무드 상단 헤더 (홈 화면과 동일, 로고를 누르면 홈으로) -->
     <header class="cyber-header">
@@ -22,9 +23,66 @@
         </nav>
     </header>
 
-    <!-- 새턴 V 상세 내용 (준비 중) -->
-    <main class="detail-page">
+    <!-- 관제실 화면: 패널 배치는 css/detail.css, 동작은 js/detail.js -->
+    <main class="hud">
+        <div class="mission-bar">
+            <span><span class="led"></span><b>FILE 03 // SATURN V</b></span>
+            <span>STATUS: <span class="status-ok">SUCCESS</span></span>
+            <span>1967 – 1973</span>
+            <span>미국 · NASA</span>
+            <span class="clock">UTC --:--:--</span>
+        </div>
+
+        <div class="hud-grid">
+            <section class="panel c4 hero-art">
+                <div class="hero-frame">
+                    <svg class="rocket-icon-img px-saturn" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="새턴 V">
+                      <g class="stars">
+                        <path fill="#8fe8ff" d="M3 4h1v1h-1zM27 6h1v1h-1zM26 15h1v1h-1zM5 18h1v1h-1zM29 26h1v1h-1z"/>
+                      </g>
+                      <g class="rocket">
+                        <g class="flame">
+                          <path fill="#ff8a1f" d="M11 27h3v1h-3zM19 27h3v1h-3zM11 28h3v1h-3zM19 28h2v1h-2zM12 29h2v1h-2zM19 29h1v1h-1zM14 30h2v1h-2zM17 30h1v1h-1zM14 31h4v1h-4z"/>
+                          <path fill="#ffd23f" d="M14 27h1v1h-1zM18 27h1v1h-1zM14 28h1v1h-1zM18 28h1v1h-1zM14 29h1v1h-1zM18 29h1v1h-1z"/>
+                          <path fill="#fffbe6" d="M15 27h3v1h-3zM15 28h3v1h-3zM15 29h3v1h-3zM16 30h1v1h-1z"/>
+                        </g>
+                        <path fill="#141a2a" d="M14 0h1v1h-1zM16 0h1v1h-1zM14 1h1v1h-1zM17 1h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM14 4h1v1h-1zM17 4h1v1h-1zM13 5h1v1h-1zM18 5h1v1h-1zM12 6h1v1h-1zM19 6h1v1h-1zM12 7h1v1h-1zM19 7h1v1h-1zM12 8h1v1h-1zM19 8h1v1h-1zM12 9h1v1h-1zM19 9h1v1h-1zM12 10h1v1h-1zM19 10h1v1h-1zM12 11h1v1h-1zM19 11h1v1h-1zM13 12h2v1h-2zM19 12h1v1h-1zM12 13h3v1h-3zM19 13h1v1h-1zM11 14h1v1h-1zM20 14h1v1h-1zM12 15h8v1h-8zM11 16h1v1h-1zM20 16h1v1h-1zM12 17h2v1h-2zM20 17h1v1h-1zM12 18h2v1h-2zM20 18h1v1h-1zM11 19h1v1h-1zM20 19h1v1h-1zM11 20h10v1h-10zM10 21h1v1h-1zM21 21h1v1h-1zM9 22h1v1h-1zM11 22h3v1h-3zM18 22h3v1h-3zM22 22h1v1h-1zM9 23h1v1h-1zM11 23h3v1h-3zM18 23h3v1h-3zM22 23h1v1h-1zM8 24h1v1h-1zM11 24h3v1h-3zM18 24h3v1h-3zM23 24h1v1h-1zM8 25h1v1h-1zM23 25h1v1h-1zM9 26h3v1h-3zM14 26h1v1h-1zM17 26h1v1h-1zM20 26h3v1h-3zM12 27h2v1h-2zM15 27h2v1h-2zM18 27h2v1h-2z"/>
+                        <path fill="#e0403a" d="M15 0h1v1h-1zM15 1h2v1h-2zM15 2h1v1h-1zM15 3h1v1h-1zM15 22h2v1h-2zM15 23h2v1h-2zM15 24h2v1h-2z"/>
+                        <path fill="#f4f6fa" d="M15 4h1v1h-1zM13 7h5v1h-5zM13 9h5v1h-5zM13 10h5v1h-5zM13 11h5v1h-5zM15 12h3v1h-3zM15 13h3v1h-3zM12 16h7v1h-7zM14 17h5v1h-5zM14 18h5v1h-5zM12 19h7v1h-7zM11 21h9v1h-9zM14 22h1v1h-1zM14 23h1v1h-1zM14 24h1v1h-1z"/>
+                        <path fill="#d4dae4" d="M16 4h1v1h-1zM14 5h4v1h-4zM13 6h6v1h-6zM18 7h1v1h-1zM18 9h1v1h-1zM18 10h1v1h-1zM18 11h1v1h-1zM18 12h1v1h-1zM18 13h1v1h-1zM12 14h8v1h-8zM19 16h1v1h-1zM19 17h1v1h-1zM19 18h1v1h-1zM19 19h1v1h-1zM20 21h1v1h-1zM17 22h1v1h-1zM17 23h1v1h-1zM17 24h1v1h-1z"/>
+                        <path fill="#a7b0bf" d="M13 8h6v1h-6zM10 22h1v1h-1zM21 22h1v1h-1zM10 23h1v1h-1zM21 23h1v1h-1zM9 24h2v1h-2zM21 24h2v1h-2zM9 25h2v1h-2zM21 25h2v1h-2z"/>
+                        <path fill="#6b7487" d="M11 25h10v1h-10z"/>
+                        <path fill="#5a6070" d="M12 26h2v1h-2zM15 26h2v1h-2zM18 26h2v1h-2z"/>
+                      </g>
+                    </svg>
+                </div>
+                <div class="hero-name">새턴 V</div>
+                <div class="hero-sub">인류를 달에 보낸 거대 로켓</div>
+            </section>
+
+            <section class="panel c8">
+                <h2 class="panel-title"><span>KEY FIGURES</span><span>핵심 숫자</span></h2>
+                <p class="pending">DATA PENDING — 준비 중</p>
+            </section>
+
+            <section class="panel c12 brief">
+                <h2 class="panel-title"><span>BRIEFING</span><span>개요</span></h2>
+                <p class="pending">DATA PENDING — 준비 중</p>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>ARCHIVE PHOTOS</span><span>기록 사진</span></h2>
+                <p class="pending">DATA PENDING — 준비 중</p>
+            </section>
+        </div>
+
+        <nav class="nav-records" aria-label="다른 기록">
+            <a href="luna.html" class="nav-btn prev">◀ 루나 탐사선</a>
+            <a href="n1.html" class="nav-btn next">소련 N1 로켓 ▶</a>
+        </nav>
     </main>
 
+    <script src="../js/glossary.js"></script>
+    <script src="../js/detail.js"></script>
 </body>
 </html>
