@@ -68,6 +68,15 @@ body {
   margin: 0;
 }
 
+/* 로고를 누르면 홈으로: 링크지만 글자 모양은 그대로 */
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+}
+.logo-link:hover {
+  text-shadow: 0 0 16px #00ffcc, 0 0 4px #00ffcc;
+}
+
 .pulse-dot {
   width: 10px;
   height: 10px;
