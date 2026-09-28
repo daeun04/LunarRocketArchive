@@ -1,0 +1,570 @@
+/* 전체 바디 스타일 (어두운 우주 배경) */
+body {
+  background-color: #0b0f19;
+  color: #00ffcc;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+}
+
+.cyber-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  border-bottom: 2px solid #00ffcc33;
+  backdrop-filter: blur(5px);
+  background-color: rgba(7, 9, 15, 0.9);
+  overflow: hidden;
+  isolation: isolate; /* 별 레이어(z-index: -1)가 헤더 배경색 위, 글자 아래에 오도록 */
+}
+
+/* 멀리 떨어진 희미한 별들: 크기가 서로 다른 타일 3겹을 겹쳐 반복 무늬가 티 나지 않게 함.
+   별은 1px 안팎으로 작고 투명도를 낮게 해서 은은하게만 보이도록 함 */
+.cyber-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* 가장 먼 별: 아주 작고 흐림 */
+    radial-gradient(1px 1px at 23px 17px, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 97px 61px, rgba(255, 255, 255, 0.25), transparent),
+    radial-gradient(1px 1px at 151px 29px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 58px 103px, rgba(190, 255, 243, 0.25), transparent),
+    /* 중간 거리 별 */
+    radial-gradient(1px 1px at 41px 83px, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 213px 37px, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 139px 121px, rgba(190, 255, 243, 0.35), transparent),
+    /* 조금 가까운 별: 드물게 배치 */
+    radial-gradient(1.5px 1.5px at 287px 53px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 119px 11px, rgba(255, 255, 255, 0.4), transparent);
+  background-size:
+    181px 127px, 181px 127px, 181px 127px, 181px 127px,
+    263px 149px, 263px 149px, 263px 149px,
+    421px 139px, 421px 139px;
+}
+
+/* 글자와 버튼이 별빛보다 위에 오도록 설정 */
+.header-left, .header-nav {
+  position: relative;
+  z-index: 2;
+}
+
+.header-left {
+  display: flex;
+  align-items: center; /* 초록 점을 세 줄 텍스트의 세로 중앙에 위치시킴 */
+  gap: 12px;
+}
+
+.header-left h1 {
+  font-size: 1.8rem; 
+  line-height: 1.0;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 10px #00ffcc;
+  margin: 0;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #00ffcc;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ffcc;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-text {
+  font-size: 0.85rem;
+  color: #ff007f;
+  text-shadow: 0 0 5px #ff007f;
+  margin-right: 10px;
+}
+
+.nav-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: 1px solid #00ffcc66;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #00ffcc;
+  color: #0b0f19;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+/* 메인 영역 및 소개글 */
+.rocket-container {
+  padding: 40px;
+}
+
+.intro-text {
+  margin-bottom: 40px;
+}
+
+.intro-text h2 {
+  color: #befff3;                          /* 눈이 편안하면서 선명한 밝은 백색 */
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(116, 144, 139, 0.4); /* 과하지 않은 은은한 네온 발광 */
+  margin-bottom: 10px;
+}
+
+.intro-text p {
+  color: #a0aec0;
+}
+
+/* ★ 핵심: 로켓 카드 가로 정렬 (Flexbox) */
+.rocket-grid {
+  display: flex;           /* 가로 배치를 위한 속성 */
+  flex-wrap: wrap;         /* 화면이 좁아지면 자연스럽게 다음 줄로 넘어감 */
+  gap: 24px;               /* 카드와 카드 사이 간격 */
+  justify-content: flex-start;
+}
+
+/* 각 로켓 카드 디자인 */
+.rocket-card {
+  background: rgba(18, 25, 41, 0.8);
+  border: 1px solid #00ffcc44;
+  border-radius: 8px;
+  padding: 24px;
+  width: 240px;            /* 카드의 가로 너비 고정 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease; /* 애니메이션을 부드럽게 만드는 속성 */
+  cursor: pointer;
+}
+
+/* 마우스 올렸을 때: 카드가 위로 올라가며 네온빛 발광 */
+.rocket-card:hover {
+  transform: translateY(-12px); 
+  border-color: #00ffcc;
+  box-shadow: 0 0 15px #00ffcc66;
+}
+
+/* 마우스 올렸을 때: 픽셀 로켓 아이콘이 더 높이 발사되는 모션 */
+.rocket-card:hover .rocket-icon {
+  transform: translateY(-8px) scale(1.1);
+}
+
+.rocket-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.rocket-icon-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.rocket-card:hover .rocket-icon-img {
+  transform: translateY(-8px) scale(1.1);
+}
+
+.rocket-card h3 {
+  color: #fff;
+  margin: 10px 0 6px 0;
+  font-size: 1.2rem;
+}
+
+.launch-year {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #ff007f;
+  margin-bottom: 12px;
+}
+
+.rocket-card p {
+  color: #cbd5e0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* 실패한 로켓 카드 스타일 포인트 */
+.fail-card {
+  border-color: #ff005544;
+}
+
+.fail-card:hover {
+  border-color: #ff0055;
+  box-shadow: 0 0 15px #ff005566;
+}
+/* ===== 픽셀 아이콘 hover 애니메이션 =====
+   steps(1)로 키프레임 사이를 뚝뚝 끊어서 1픽셀 단위로 움직이는 느낌을 냄.
+   SVG 안에서 1px = 픽셀 1칸. */
+
+/* 별 반짝임 (모든 카드 공통) */
+.rocket-card:hover .rocket-icon-img .stars {
+  animation: px-twinkle 0.6s steps(1, end) infinite;
+}
+@keyframes px-twinkle {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* 화염 깜빡임 (새턴 V, 팰컨 9 공통) */
+.rocket-card:hover .rocket-icon-img .flame {
+  transform-origin: 16px 27px;
+  animation: px-flicker 0.24s steps(1, end) infinite;
+}
+@keyframes px-flicker {
+  0%   { transform: scaleY(1.4); }
+  33%  { transform: scaleY(1.8); }
+  66%  { transform: scaleY(1.2); }
+}
+
+/* 스푸트니크 1호: 살짝 떨리다가 우상단으로 발사 → 좌하단에서 다시 날아 들어옴 */
+.rocket-card:hover .px-sputnik .ball {
+  animation: sputnik-launch 1.4s steps(1, end);
+}
+@keyframes sputnik-launch {
+  0%   { transform: translate(0, 0); }
+  8%   { transform: translate(1px, 0); }
+  16%  { transform: translate(-1px, 0); }
+  24%  { transform: translate(0, 0); }
+  32%  { transform: translate(1px, -1px); }
+  40%  { transform: translate(3px, -3px); }
+  48%  { transform: translate(6px, -6px); }
+  56%  { transform: translate(12px, -12px); }
+  64%  { transform: translate(22px, -22px); }
+  70%  { transform: translate(40px, -40px); }
+  72%  { transform: translate(-32px, 32px); }
+  80%  { transform: translate(-12px, 12px); }
+  88%  { transform: translate(-4px, 4px); }
+  94%  { transform: translate(-1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+.rocket-card:hover .px-sputnik .signal {
+  animation: sputnik-beep 0.3s steps(1, end) infinite;
+}
+@keyframes sputnik-beep {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* 새턴 V: 진동 → 수직 발사로 화면 밖 → 아래에서 다음 로켓이 올라옴 */
+.rocket-card:hover .px-saturn .rocket {
+  animation: saturn-launch 1.6s steps(1, end);
+}
+@keyframes saturn-launch {
+  0%   { transform: translate(0, 0); }
+  6%   { transform: translate(1px, 0); }
+  12%  { transform: translate(-1px, 0); }
+  18%  { transform: translate(1px, 0); }
+  24%  { transform: translate(-1px, 0); }
+  30%  { transform: translate(0, -1px); }
+  38%  { transform: translate(0, -2px); }
+  46%  { transform: translate(0, -4px); }
+  54%  { transform: translate(0, -8px); }
+  62%  { transform: translate(0, -15px); }
+  68%  { transform: translate(0, -26px); }
+  72%  { transform: translate(0, -40px); }
+  74%  { transform: translate(0, 34px); }
+  82%  { transform: translate(0, 14px); }
+  90%  { transform: translate(0, 5px); }
+  96%  { transform: translate(0, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* 소련 N1: 1969년 7월 2차 발사 실패를 재현
+   점화 → 천천히 이륙 → 8번 엔진 폭발 섬광 → 엔진 제어 시스템(KORD)이 엔진 정지 →
+   멈칫하다 발사대로 추락 → 충격파 + 화구 → 화구가 솟으며 버섯구름, 발사대 소실 */
+.px-n1 .ignite,
+.px-n1 .fault,
+.px-n1 .shock {
+  opacity: 0;
+}
+.rocket-card:hover .px-n1 .ignite {
+  transform-origin: 15px 24px;
+  animation: px-flicker 0.24s steps(1, end) infinite,
+             n1-ignite 3.2s steps(1, end) forwards;
+}
+@keyframes n1-ignite {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  36%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.rocket-card:hover .px-n1 .rocket {
+  animation: n1-flight 3.2s steps(1, end) forwards;
+}
+@keyframes n1-flight {
+  0%   { transform: translate(0, 0); opacity: 1; }
+  5%   { transform: translate(1px, 0); }
+  9%   { transform: translate(-1px, 0); }
+  13%  { transform: translate(0, 0); }
+  17%  { transform: translate(0, -1px); }
+  22%  { transform: translate(0, -2px); }
+  27%  { transform: translate(0, -3px); }
+  30%  { transform: translate(1px, -4px); }
+  33%  { transform: translate(0, -5px); }
+  38%  { transform: translate(0, -5px); }
+  42%  { transform: translate(1px, -4px); }
+  45%  { transform: translate(1px, -2px); }
+  48%  { transform: translate(1px, 1px); }
+  51%  { transform: translate(2px, 3px); opacity: 1; }
+  55%  { opacity: 0; }
+  100% { transform: translate(2px, 3px); opacity: 0; }
+}
+.rocket-card:hover .px-n1 .fault {
+  animation: n1-fault 3.2s steps(1, end) forwards;
+}
+@keyframes n1-fault {
+  0%   { opacity: 0; }
+  28%  { opacity: 1; }
+  30%  { opacity: 0; }
+  32%  { opacity: 1; }
+  35%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.rocket-card:hover .px-n1 .shock {
+  transform-origin: 15px 26px;
+  animation: n1-shock 3.2s steps(1, end) forwards;
+}
+@keyframes n1-shock {
+  0%   { transform: scale(0.4); opacity: 0; }
+  51%  { transform: scale(0.6); opacity: 1; }
+  54%  { transform: scale(1.2); }
+  57%  { transform: scale(1.8); opacity: 0.7; }
+  60%  { transform: scale(2.5); opacity: 0.35; }
+  63%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+/* 평소 모습의 폭발 그림은 hover 중엔 숨기고, 둥근 화구 + 기둥으로 버섯구름을 만듦 */
+.px-n1 .fireball,
+.px-n1 .stem {
+  opacity: 0;
+}
+.rocket-card:hover .px-n1 .fire {
+  opacity: 0;
+}
+.rocket-card:hover .px-n1 .fireball {
+  transform-origin: 15px 25px;
+  animation: n1-fireball 3.2s steps(1, end) forwards;
+}
+@keyframes n1-fireball {
+  0%   { transform: scale(0); opacity: 1; }
+  51%  { transform: scale(0.3); }
+  53%  { transform: scale(0.7); }
+  56%  { transform: scale(1.1); }
+  60%  { transform: translate(0, -2px) scale(1.3); }
+  66%  { transform: translate(0, -5px) scale(1.4); }
+  74%  { transform: translate(0, -8px) scale(1.35); }
+  84%  { transform: translate(0, -10px) scale(1.3); }
+  100% { transform: translate(0, -11px) scale(1.25); opacity: 1; }
+}
+.rocket-card:hover .px-n1 .stem {
+  transform-origin: 15px 32px;
+  animation: n1-stem 3.2s steps(1, end) forwards;
+}
+@keyframes n1-stem {
+  0%   { transform: scaleY(0); opacity: 1; }
+  60%  { transform: scaleY(0.6); }
+  66%  { transform: scaleY(1.2); }
+  74%  { transform: scaleY(1.8); }
+  84%  { transform: scaleY(2.4); }
+  100% { transform: scaleY(2.6); opacity: 1; }
+}
+.rocket-card:hover .px-n1 .smoke {
+  transform-origin: 15px 26px;
+  animation: n1-smoke 3.2s steps(1, end) forwards;
+}
+@keyframes n1-smoke {
+  0%   { transform: scale(0.3); opacity: 0; }
+  58%  { transform: scale(0.6); opacity: 1; }
+  66%  { transform: scale(0.9); }
+  76%  { transform: scale(1.1); }
+  88%  { transform: scale(1.2); }
+  100% { transform: scale(1.25); opacity: 1; }
+}
+.rocket-card:hover .px-n1 .debris {
+  transform-origin: 15px 22px;
+  animation: n1-debris 3.2s steps(1, end) forwards;
+}
+@keyframes n1-debris {
+  0%   { transform: scale(0.2); opacity: 0; }
+  53%  { transform: scale(0.6); opacity: 1; }
+  57%  { transform: scale(1); }
+  62%  { transform: scale(1.4); }
+  70%  { transform: scale(1.8); opacity: 0.6; }
+  80%  { transform: scale(2.2); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* 팰컨 9: 마우스를 올리면 착륙 장면만 재생.
+   위(화면 밖)에서 긴 역추진 불꽃을 뿜으며 천천히 내려오고, 고도가 낮아질수록 불꽃이
+   짧고 옅어지다가 착지(85%) 순간 꺼지고 바닥에서 먼지가 살짝 일어남.
+   바닥에 가까워질수록 1px 이동 간격이 길어져 감속하는 느낌. */
+.rocket-card:hover .px-falcon9 .rocket {
+  animation: falcon-land 3.4s steps(1, end) forwards;
+}
+@keyframes falcon-land {
+  0%   { transform: translate(0, -40px); }
+  4%   { transform: translate(0, -34px); }
+  9%   { transform: translate(0, -29px); }
+  14%  { transform: translate(0, -25px); }
+  19%  { transform: translate(0, -21px); }
+  24%  { transform: translate(0, -18px); }
+  29%  { transform: translate(0, -15px); }
+  34%  { transform: translate(0, -12px); }
+  39%  { transform: translate(0, -10px); }
+  44%  { transform: translate(0, -8px); }
+  49%  { transform: translate(0, -6px); }
+  54%  { transform: translate(0, -5px); }
+  60%  { transform: translate(0, -4px); }
+  66%  { transform: translate(0, -3px); }
+  72%  { transform: translate(0, -2px); }
+  78%  { transform: translate(0, -1px); }
+  85%  { transform: translate(0, 0); }
+  100% { transform: translate(0, 0); }
+}
+/* 불꽃 길이/밝기: 처음에 가장 길고 점점 줄어들다 착지(85%)에 꺼짐.
+   흔들림(px-flicker)은 안쪽 .flame이 계속 담당해서 길이 변화와 겹쳐 보임 */
+.rocket-card:hover .px-falcon9 .burn {
+  transform-origin: 16px 28px;
+  animation: falcon-burn 3.4s steps(1, end) forwards;
+}
+@keyframes falcon-burn {
+  0%   { transform: scaleY(3.2); opacity: 1; }
+  9%   { transform: scaleY(2.8); }
+  19%  { transform: scaleY(2.4); }
+  29%  { transform: scaleY(2); }
+  39%  { transform: scaleY(1.6); opacity: 0.95; }
+  49%  { transform: scaleY(1.3); opacity: 0.85; }
+  57%  { transform: scaleY(1); opacity: 0.75; }
+  64%  { transform: scaleY(0.75); opacity: 0.65; }
+  71%  { transform: scaleY(0.5); opacity: 0.5; }
+  78%  { transform: scaleY(0.3); opacity: 0.35; }
+  85%  { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(0); opacity: 0; }
+}
+.px-falcon9 .dust {
+  opacity: 0;
+}
+.rocket-card:hover .px-falcon9 .dust {
+  transform-origin: 16px 28px;
+  animation: falcon-dust 3.4s steps(1, end) forwards;
+}
+@keyframes falcon-dust {
+  0%   { transform: scale(0.5); opacity: 0; }
+  80%  { transform: scale(0.6); opacity: 0.8; }
+  85%  { transform: scale(1); opacity: 1; }
+  90%  { transform: scale(1.3); opacity: 0.6; }
+  95%  { transform: scale(1.5); opacity: 0.3; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* 루나 탐사선: 캡슐이 떨어져 에어백으로 두 번 튕긴 뒤 멈춤 →
+   꽃잎 덮개가 열리고 → 안테나가 펴지며 → 신호 송신 */
+.rocket-card:hover .px-luna .probe {
+  animation: luna-drop 3s steps(1, end) forwards;
+}
+@keyframes luna-drop {
+  0%   { transform: translate(0, -30px); }
+  6%   { transform: translate(0, -24px); }
+  12%  { transform: translate(0, -18px); }
+  18%  { transform: translate(0, -12px); }
+  23%  { transform: translate(0, -7px); }
+  28%  { transform: translate(0, -3px); }
+  32%  { transform: translate(0, 0); }
+  36%  { transform: translate(1px, -3px); }
+  40%  { transform: translate(1px, -5px); }
+  44%  { transform: translate(2px, -3px); }
+  48%  { transform: translate(2px, 0); }
+  52%  { transform: translate(1px, -1px); }
+  56%  { transform: translate(0, 0); }
+  100% { transform: translate(0, 0); }
+}
+.rocket-card:hover .px-luna .petals {
+  transform-origin: 16px 24px;
+  animation: luna-petals 3s steps(1, end) forwards;
+}
+@keyframes luna-petals {
+  0%   { transform: scaleX(0); }
+  62%  { transform: scaleX(0.5); }
+  68%  { transform: scaleX(0.75); }
+  74%  { transform: scaleX(1); }
+  100% { transform: scaleX(1); }
+}
+.rocket-card:hover .px-luna .antennas {
+  animation: luna-antennas 3s steps(1, end) forwards;
+}
+@keyframes luna-antennas {
+  0%   { opacity: 0; }
+  82%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+.rocket-card:hover .px-luna .signal {
+  animation: luna-signal 3s steps(1, end) forwards;
+}
+@keyframes luna-signal {
+  0%   { opacity: 0; }
+  88%  { opacity: 1; }
+  92%  { opacity: 0; }
+  96%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* 아폴로 우주선: 상승단 이륙 화염은 평소엔 숨김 */
+.px-apollo .lift-flame {
+  opacity: 0;
+}
+/* 상승단이 하강단을 달에 남기고 이륙 → 화면 밖으로. 그동안 사령·기계선은 궤도를 돎 */
+.rocket-card:hover .px-apollo .ascent {
+  animation: apollo-liftoff 2.4s steps(1, end) forwards;
+}
+@keyframes apollo-liftoff {
+  0%   { transform: translate(0, 0); }
+  8%   { transform: translate(1px, 0); }
+  16%  { transform: translate(-1px, 0); }
+  24%  { transform: translate(0, -1px); }
+  32%  { transform: translate(0, -2px); }
+  40%  { transform: translate(0, -4px); }
+  48%  { transform: translate(0, -7px); }
+  56%  { transform: translate(0, -11px); }
+  64%  { transform: translate(1px, -16px); }
+  72%  { transform: translate(2px, -23px); }
+  80%  { transform: translate(3px, -32px); }
+  100% { transform: translate(3px, -32px); }
+}
+.rocket-card:hover .px-apollo .lift-flame {
+  transform-origin: 16px 19px;
+  animation: px-flicker 0.24s steps(1, end) infinite,
+             apollo-flame-on 2.4s steps(1, end) forwards;
+}
+@keyframes apollo-flame-on {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+.rocket-card:hover .px-apollo .csm {
+  animation: apollo-orbit 2.4s steps(12, end) forwards;
+}
+@keyframes apollo-orbit {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-12px, 0); }
+}
+
+/* 움직임 줄이기 설정을 켠 사용자에게는 애니메이션을 끔 */
+@media (prefers-reduced-motion: reduce) {
+  .rocket-card:hover .rocket-icon-img * {
+    animation: none !important;
+  }
+}
