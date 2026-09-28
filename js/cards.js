@@ -1,7 +1,7 @@
 // 카드 픽셀 애니메이션 재생과 상세 페이지 이동
 // - 마우스가 있는 기기(PC): 마우스를 올리면 재생, 떼면 원래대로. 카드를 클릭하면 바로 상세 페이지로 이동
-// - 터치 기기(모바일): 카드가 화면에 충분히 보이면 한 번 자동 재생.
-//   탭하면 모션이 다시 재생되면서 "자세히 보기" 버튼이 나타나고, 그 버튼을 누르면 상세 페이지로 이동
+// - 터치 기기(모바일): 카드를 탭했을 때만 모션이 재생되면서 "자세히 보기" 버튼이 나타나고,
+//   그 버튼을 누르면 상세 페이지로 이동
 // 상세 페이지 주소는 각 카드의 data-detail 값 (비어 있으면 아직 준비 중으로 보고 이동하지 않음)
 
 const cards = document.querySelectorAll('.rocket-card');
@@ -34,18 +34,7 @@ if (canHover) {
     card.addEventListener('click', () => goToDetail(card));
   });
 } else {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        play(entry.target);
-        observer.unobserve(entry.target); // 자동 재생은 카드마다 한 번만
-      }
-    });
-  }, { threshold: 0.6 }); // 카드가 60% 이상 보일 때
-
   cards.forEach((card) => {
-    observer.observe(card);
-
     // 카드 오른쪽 위에 "자세히 보기" 버튼 추가 (선택된 카드에서만 보임)
     const button = document.createElement('a');
     button.className = 'detail-btn';
