@@ -7,6 +7,24 @@ body {
   padding: 0;
 }
 
+/* 홈 화면 배경: 성운과 별
+   작은 별 타일(260×220px) 4겹을 반복하고, 위에 보라·청록 성운을 옅게 겹침.
+   스크롤해도 배경은 그대로 있어 멀리 있는 우주처럼 보임 */
+.home-body {
+  background-color: #0c1224;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 210px 160px, rgba(190, 255, 243, 0.45), transparent),
+    radial-gradient(1px 1px at 60px 190px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(120, 60, 200, 0.18), transparent 70%),  /* 보라 성운 */
+    radial-gradient(ellipse 45% 40% at 15% 75%, rgba(0, 160, 200, 0.14), transparent 70%);   /* 청록 성운 */
+  background-size:
+    260px 220px, 260px 220px, 260px 220px, 260px 220px,
+    100% 100%, 100% 100%;
+  background-attachment: fixed;
+}
+
 .cyber-header {
   position: relative;
   display: flex;

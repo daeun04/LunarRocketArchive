@@ -267,8 +267,9 @@
   height: 100%;
 }
 .h-bar {
+  flex-shrink: 0;          /* 칸이 좁아도 막대가 강제로 줄지 않게 (비율 유지) */
   width: 34px;
-  height: var(--h);
+  height: calc(var(--h) * 0.72);  /* 위 숫자·아래 이름표 자리를 빼고 칸 안에 들어가도록 */
   background: repeating-linear-gradient(0deg, #00ffcc 0 6px, #00ffcc99 6px 8px);
   box-shadow: 0 0 10px #00ffcc66;
 }
@@ -288,7 +289,7 @@
   animation: bar-grow 1.6s steps(12, end) 0.3s forwards;
 }
 @keyframes bar-grow {
-  to { height: var(--h); }
+  to { height: calc(var(--h) * 0.72); }
 }
 .h-val {
   margin-bottom: 4px;
@@ -296,6 +297,7 @@
   color: #fff;
 }
 .h-name {
+  height: 2.8em;           /* 이름이 한 줄이든 두 줄이든 같은 높이 → 막대 바닥이 한 줄로 맞춰짐 */
   margin-top: 6px;
   font-size: 0.72rem;
   color: #a0aec0;
@@ -337,6 +339,20 @@
 @keyframes site-ping {
   0%   { r: 3;  opacity: 1; }
   100% { r: 10; opacity: 0; }
+}
+
+/* ----- 궤도 그림 (스푸트니크) ----- */
+.orbit-svg {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.note {
+  margin: 10px 0 0;
+  font-size: 0.75rem;
+  color: #6b7487;
+  word-break: keep-all;
 }
 
 /* ----- 시간 기록 ----- */

@@ -56,19 +56,81 @@
                 <div class="hero-sub">인류 최초의 인공위성</div>
             </section>
 
-            <section class="panel c8">
+            <section class="panel c5">
                 <h2 class="panel-title"><span>KEY FIGURES</span><span>핵심 숫자</span></h2>
-                <p class="pending">DATA PENDING — 준비 중</p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-num"><span class="count">83.6</span><small>kg</small></div><div class="stat-label">무게</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">58</span><small>cm</small></div><div class="stat-label">지름</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">96</span><small>분</small></div><div class="stat-label">지구 한 바퀴 (96.2분)</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">22</span><small>일</small></div><div class="stat-label">신호를 보낸 기간</div></div>
+                </div>
             </section>
 
-            <section class="panel c12 brief">
+            <section class="panel c3">
+                <h2 class="panel-title"><span>SEQUENCE</span><span>작전 순서</span></h2>
+                <ul class="checklist">
+                    <li><span class="ok">[OK]</span>R-7 로켓 발사 (바이코누르)</li>
+                    <li><span class="ok">[OK]</span>발사 약 5분 뒤 궤도 진입</li>
+                    <li><span class="ok">[OK]</span>로켓에서 분리, 안테나 펼침</li>
+                    <li><span class="ok">[OK]</span>'삐-삐' 신호 송출</li>
+                    <li><span class="warn">[--]</span>22일 뒤 전지 소진, 신호 중단</li>
+                    <li><span class="warn">[--]</span>약 3개월 뒤 대기권 재진입</li>
+                </ul>
+            </section>
+
+            <section class="panel c7 brief">
                 <h2 class="panel-title"><span>BRIEFING</span><span>개요</span></h2>
-                <p class="pending">DATA PENDING — 준비 중</p>
+                <p>스푸트니크 1호는 1957년 10월 4일 소련이 쏘아 올린 인류 최초의 인공위성이다. 대륙간 탄도 미사일을 개조한 <button type="button" class="term" data-term="r7">R-7 로켓</button>에 실려 발사되었고, 지구를 약 96분마다 한 바퀴씩 도는 타원 <button type="button" class="term" data-term="orbit">궤도</button>에 올랐다.</p>
+                <p>지름 58cm의 금속 공에 안테나 4개가 달린 단순한 구조였지만, 전 세계 무선가들이 직접 들을 수 있었던 '삐-삐' 신호는 큰 충격을 주었다. 이 사건은 <button type="button" class="term" data-term="shock">스푸트니크 쇼크</button>로 불리며 미국의 NASA 설립과 본격적인 우주 경쟁의 출발점이 되었다.</p>
+            </section>
+
+            <section class="panel c5">
+                <h2 class="panel-title"><span>ORBIT MAP</span><span>궤도 (실제 비율)</span></h2>
+                <svg class="orbit-svg" viewBox="0 0 300 220" role="img" aria-label="스푸트니크 1호 궤도: 근지점 215km, 원지점 939km">
+                    <path d="M242.2 110 A97.3 97.1 0 1 0 47.7 110 A97.3 97.1 0 1 0 242.2 110" fill="none" stroke="#00ffcc" stroke-dasharray="3 3"/>
+                    <circle cx="150" cy="110" r="89.2" fill="#12305e" stroke="#3a78d8"/>
+                    <path d="M90 80q20 -18 45 -8t30 18M110 150q25 10 55 -5" fill="none" stroke="#3fbf6f" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+                    <circle cx="242.2" cy="110" r="2.5" fill="#ff007f"/>
+                    <circle cx="47.7" cy="110" r="2.5" fill="#ff007f"/>
+                    <text x="248.2" y="124" fill="#fff" font-size="9">근지점</text>
+                    <text x="248.2" y="135" fill="#ff007f" font-size="9">215km</text>
+                    <text x="43.7" y="124" fill="#fff" font-size="9" text-anchor="end">원지점</text>
+                    <text x="43.7" y="135" fill="#ff007f" font-size="9" text-anchor="end">939km</text>
+                    <circle r="3.5" fill="#f4f6fa" stroke="#00ffcc">
+                        <animateMotion dur="9.6s" repeatCount="indefinite" path="M242.2 110 A97.3 97.1 0 1 0 47.7 110 A97.3 97.1 0 1 0 242.2 110"/>
+                    </circle>
+                </svg>
+                <p class="note">흰 점이 스푸트니크 1호 · 96.2분 걸리는 한 바퀴를 약 600배 빠르게 보여줌 · 지구와 거의 붙어 있을 만큼 낮은 궤도</p>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>FLIGHT LOG</span><span>비행 기록</span></h2>
+                <ol class="timeline">
+                    <li class="key"><time>1957.10.04 19:28 UTC</time>바이코누르에서 R-7 로켓으로 발사</li>
+                    <li><time>1957.10.05</time>소련 타스 통신이 인공위성 발사 성공을 공식 발표</li>
+                    <li><time>1957.10.26</time>전지가 다해 신호 중단 (22일간 송신)</li>
+                    <li class="key"><time>1958.01.04</time>궤도가 낮아져 <button type="button" class="term" data-term="reentry">대기권 재진입</button>, 불타 사라짐</li>
+                </ol>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>AFTERMATH</span><span>이후 벌어진 일</span></h2>
+                <ol class="timeline">
+                    <li><time>1957.11.03</time>스푸트니크 2호 발사, 개 라이카 탑승</li>
+                    <li><time>1958.01.31</time>미국 첫 인공위성 익스플로러 1호 발사 (미국 시간)</li>
+                    <li><time>1958.02.07</time>미국 국방고등연구계획국(ARPA, 현 DARPA) 설립</li>
+                    <li class="key"><time>1958.10.01</time>미국 NASA 출범</li>
+                </ol>
             </section>
 
             <section class="panel c12">
                 <h2 class="panel-title"><span>ARCHIVE PHOTOS</span><span>기록 사진</span></h2>
-                <p class="pending">DATA PENDING — 준비 중</p>
+                <div class="gallery">
+                    <figure style="margin:0"><div class="photo">사진 자리<br>스푸트니크 1호 복제품</div><figcaption class="caption">출처 확인 후 추가</figcaption></figure>
+                    <figure style="margin:0"><div class="photo">사진 자리<br>R-7 로켓 발사</div><figcaption class="caption">출처 확인 후 추가</figcaption></figure>
+                    <figure style="margin:0"><div class="photo">사진 자리<br>조립 중인 스푸트니크</div><figcaption class="caption">출처 확인 후 추가</figcaption></figure>
+                    <figure style="margin:0"><div class="photo">사진 자리<br>당시 신문 보도</div><figcaption class="caption">출처 확인 후 추가</figcaption></figure>
+                </div>
             </section>
         </div>
 
