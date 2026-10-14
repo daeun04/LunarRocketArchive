@@ -415,6 +415,32 @@
   color: #a0aec0;
 }
 
+/* 실제 사진: 전체가 보이도록 칸 안에 맞춤, 누르면 위키미디어 원본 페이지 */
+.photo-fig {
+  margin: 0;
+}
+.photo-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #03050a;
+  border: 1px solid #00ffcc33;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.photo-fig a:hover .photo-img,
+.photo-fig a:focus-visible .photo-img {
+  border-color: #00ffcc;
+  box-shadow: 0 0 12px #00ffcc55;
+}
+.credit {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.66rem;
+  color: #6b7487;
+  word-break: break-all;
+}
+
 /* ----- 이전 / 다음 기록 ----- */
 .nav-records {
   display: flex;
