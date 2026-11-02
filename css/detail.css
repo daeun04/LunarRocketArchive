@@ -58,6 +58,16 @@
 }
 .status-ok   { color: #00ff88; }
 .status-fail { color: #ff0055; }
+.status-active { color: #ffd23f; }   /* 진행 중인 계획 */
+.status-planned { color: #8fe8ff; }  /* 개발 중, 아직 발사 전 */
+.mission-planned .led {
+  background: #8fe8ff;
+  box-shadow: 0 0 8px #8fe8ff;
+}
+.mission-active .led {
+  background: #ffd23f;
+  box-shadow: 0 0 8px #ffd23f;
+}
 .mission-fail .led {
   background: #ff0055;
   box-shadow: 0 0 8px #ff0055;
@@ -202,6 +212,7 @@
 }
 .checklist .ok   { color: #00ff88; }
 .checklist .warn { color: #ffb020; }
+.checklist .next { color: #ffd23f; }   /* 아직 오지 않은 단계 */
 
 /* ----- 본문 ----- */
 .brief p {
@@ -341,6 +352,25 @@
   100% { r: 10; opacity: 0; }
 }
 
+/* ----- 이름-설명 목록 (승무원, 비행 기록 등) ----- */
+.spec-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.spec-list dt {
+  color: #00ffcc;
+  white-space: nowrap;
+}
+.spec-list dd {
+  margin: 0;
+  color: #cbd5e0;
+  word-break: keep-all;
+}
+
 /* ----- 궤도 그림 (스푸트니크) ----- */
 .orbit-svg {
   display: block;
@@ -386,6 +416,11 @@
   display: block;
   font-size: 0.75rem;
   color: #00ffcc;
+}
+.timeline .kst {
+  margin-left: 8px;
+  color: #6b7487;
+  font-size: 0.68rem;
 }
 .timeline li.key time {
   color: #ff007f;
@@ -439,6 +474,125 @@
   font-size: 0.66rem;
   color: #6b7487;
   word-break: break-all;
+}
+
+/* 대표 그림: 누르면 다시 재생 */
+.hero-frame[role="button"] {
+  cursor: pointer;
+}
+.hero-frame[role="button"]:focus-visible {
+  outline: 1px dashed #00ffcc;
+  outline-offset: 6px;
+}
+
+/* ----- 기록 사진 크게 보기 ----- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(3, 5, 10, 0.92);
+}
+.lightbox[hidden] {
+  display: none;
+}
+.lb-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(900px, 100%);
+  margin: 0;
+}
+.lb-img {
+  max-width: 100%;
+  max-height: calc(100svh - 160px);
+  border: 1px solid #00ffcc66;
+  box-shadow: 0 0 30px #00ffcc33;
+}
+.lb-caption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #fff;
+}
+.lb-caption .credit {
+  margin-top: 4px;
+  font-size: 0.75rem;
+}
+.lb-source {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: #00ffcc;
+}
+.lb-close,
+.lb-prev,
+.lb-next {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  background: rgba(7, 9, 15, 0.85);
+  border: 1px solid #00ffcc66;
+  color: #00ffcc;
+  font: inherit;
+  cursor: pointer;
+}
+.lb-close:hover,
+.lb-prev:hover,
+.lb-next:hover {
+  background: #00ffcc;
+  color: #0b0f19;
+}
+.lb-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+@media (max-width: 640px) {
+  .lightbox {
+    padding: 60px 8px 16px;
+    gap: 4px;
+  }
+  .lb-prev,
+  .lb-next {
+    width: 34px;
+  }
+}
+
+/* ----- 참고 자료 ----- */
+.ref-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+.ref-list li {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  border-left: 2px solid #00ffcc44;
+}
+.ref-list a {
+  color: #fff;
+  text-decoration: none;
+  word-break: keep-all;
+}
+.ref-list a:hover,
+.ref-list a:focus-visible {
+  color: #00ffcc;
+  text-decoration: underline;
+}
+.ref-src {
+  margin-top: 2px;
+  font-size: 0.72rem;
+  color: #6b7487;
 }
 
 /* ----- 이전 / 다음 기록 ----- */

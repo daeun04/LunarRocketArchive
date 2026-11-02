@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>아르테미스 계획 | Lunar Rocket Archive</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
+</head>
+<body class="detail-body">
+
+    <!-- 사이버펑크 무드 상단 헤더 (홈 화면과 동일, 로고를 누르면 홈으로) -->
+    <header class="cyber-header">
+        <div class="header-left">
+            <span class="pulse-dot"></span>
+            <h1><a href="../index.html" class="logo-link" aria-label="홈으로">PROJECT:<br>LUNAR<br>ARCHIVE</a></h1>
+        </div>
+        <nav class="header-nav">
+            <span class="status-text">SYSTEM: ONLINE</span>
+            <a href="../index.html#all" class="nav-btn">ALL</a>
+            <a href="../index.html#success" class="nav-btn">SUCCESS</a>
+            <a href="../index.html#failure" class="nav-btn">FAIL</a>
+        </nav>
+    </header>
+
+    <!-- 관제실 화면: 패널 배치는 css/detail.css, 동작은 js/detail.js -->
+    <main class="hud">
+        <div class="mission-bar mission-active">
+            <span><span class="led"></span><b>FILE 07 // ARTEMIS PROGRAM</b></span>
+            <span>STATUS: <span class="status-active">ACTIVE</span></span>
+            <span>2022 – 현재</span>
+            <span>미국 · NASA (국제 협력)</span>
+            <span class="clock">UTC --:--:--</span>
+        </div>
+
+        <div class="hud-grid">
+            <section class="panel c4 hero-art">
+                <div class="hero-frame">
+                    <svg class="rocket-icon-img px-artemis" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="아르테미스 계획 SLS 로켓">
+                      <g class="stars">
+                        <path fill="#8fe8ff" d="M4 3h1v1h-1zM26 6h1v1h-1zM1 10h1v1h-1zM27 14h1v1h-1zM31 17h1v1h-1zM2 22h1v1h-1z"/>
+                      </g>
+                      <g class="rocket">
+                        <g class="flame">
+                          <path fill="#ff8a1f" d="M9 28h1v1h-1zM11 28h1v1h-1zM13 28h1v1h-1zM18 28h1v1h-1zM20 28h1v1h-1zM22 28h1v1h-1zM10 30h1v1h-1zM14 30h1v1h-1zM17 30h1v1h-1zM21 30h1v1h-1zM15 31h2v1h-2z"/>
+                          <path fill="#ffd23f" d="M10 28h1v1h-1zM14 28h1v1h-1zM17 28h1v1h-1zM21 28h1v1h-1zM9 29h1v1h-1zM11 29h1v1h-1zM14 29h1v1h-1zM17 29h1v1h-1zM20 29h1v1h-1zM22 29h1v1h-1zM15 30h2v1h-2z"/>
+                          <path fill="#fffbe6" d="M15 28h2v1h-2zM10 29h1v1h-1zM15 29h2v1h-2zM21 29h1v1h-1z"/>
+                        </g>
+                        <g class="srb-l">
+                          <path fill="#f4f6fa" d="M10 11h1v1h-1zM9 12h2v1h-2zM9 13h2v1h-2zM9 14h2v1h-2zM9 15h2v1h-2zM9 17h2v1h-2zM9 18h2v1h-2zM9 19h2v1h-2zM9 20h2v1h-2zM9 21h2v1h-2zM9 22h2v1h-2zM9 24h2v1h-2zM9 25h2v1h-2zM9 26h2v1h-2z"/>
+                          <path fill="#d4dae4" d="M11 12h1v1h-1zM11 13h1v1h-1zM11 14h1v1h-1zM11 15h1v1h-1zM11 17h1v1h-1zM11 18h1v1h-1zM11 19h1v1h-1zM11 20h1v1h-1zM11 21h1v1h-1zM11 22h1v1h-1zM11 24h1v1h-1zM11 25h1v1h-1zM11 26h1v1h-1z"/>
+                          <path fill="#6b7487" d="M9 16h3v1h-3zM9 23h3v1h-3z"/>
+                          <path fill="#a7b0bf" d="M9 27h3v1h-3z"/>
+                        </g>
+                        <g class="srb-r">
+                          <path fill="#f4f6fa" d="M21 11h1v1h-1zM20 12h2v1h-2zM20 13h2v1h-2zM20 14h2v1h-2zM20 15h2v1h-2zM20 17h2v1h-2zM20 18h2v1h-2zM20 19h2v1h-2zM20 20h2v1h-2zM20 21h2v1h-2zM20 22h2v1h-2zM20 24h2v1h-2zM20 25h2v1h-2zM20 26h2v1h-2z"/>
+                          <path fill="#d4dae4" d="M22 12h1v1h-1zM22 13h1v1h-1zM22 14h1v1h-1zM22 15h1v1h-1zM22 17h1v1h-1zM22 18h1v1h-1zM22 19h1v1h-1zM22 20h1v1h-1zM22 21h1v1h-1zM22 22h1v1h-1zM22 24h1v1h-1zM22 25h1v1h-1zM22 26h1v1h-1z"/>
+                          <path fill="#6b7487" d="M20 16h3v1h-3zM20 23h3v1h-3z"/>
+                          <path fill="#a7b0bf" d="M20 27h3v1h-3z"/>
+                        </g>
+                        <g class="core">
+                          <path fill="#6b7487" d="M15 1h2v1h-2zM13 8h6v1h-6zM13 27h1v1h-1zM15 27h2v1h-2zM18 27h1v1h-1z"/>
+                          <path fill="#d4dae4" d="M15 2h2v1h-2zM16 3h2v1h-2zM14 4h1v1h-1zM16 4h1v1h-1zM17 5h1v1h-1zM17 6h1v1h-1zM13 7h5v1h-5z"/>
+                          <path fill="#f4f6fa" d="M14 3h2v1h-2zM15 4h1v1h-1zM13 5h4v1h-4zM13 6h4v1h-4z"/>
+                          <path fill="#a7b0bf" d="M17 4h1v1h-1zM18 5h1v1h-1zM18 6h1v1h-1zM12 7h1v1h-1zM18 7h1v1h-1z"/>
+                          <path fill="#5a6070" d="M19 7h1v1h-1z"/>
+                          <path fill="#f6a04a" d="M13 9h1v1h-1zM13 10h1v1h-1zM13 11h1v1h-1zM13 12h1v1h-1zM13 13h1v1h-1zM13 14h1v1h-1zM13 15h1v1h-1zM13 16h1v1h-1zM13 17h1v1h-1zM13 18h1v1h-1zM13 19h1v1h-1zM13 20h1v1h-1zM13 21h1v1h-1zM13 22h1v1h-1zM13 23h1v1h-1zM13 24h1v1h-1zM13 25h1v1h-1z"/>
+                          <path fill="#e8761f" d="M14 9h4v1h-4zM14 10h4v1h-4zM14 11h4v1h-4zM14 13h4v1h-4zM14 14h4v1h-4zM14 15h4v1h-4zM14 16h4v1h-4zM14 17h4v1h-4zM14 18h4v1h-4zM14 19h4v1h-4zM14 20h4v1h-4zM14 21h4v1h-4zM14 22h4v1h-4zM14 23h4v1h-4zM14 24h4v1h-4zM14 25h4v1h-4z"/>
+                          <path fill="#b4561a" d="M18 9h1v1h-1zM18 10h1v1h-1zM18 11h1v1h-1zM14 12h5v1h-5zM18 13h1v1h-1zM18 14h1v1h-1zM18 15h1v1h-1zM18 16h1v1h-1zM18 17h1v1h-1zM18 18h1v1h-1zM18 19h1v1h-1zM18 20h1v1h-1zM18 21h1v1h-1zM18 22h1v1h-1zM18 23h1v1h-1zM18 24h1v1h-1zM18 25h1v1h-1zM13 26h6v1h-6z"/>
+                        </g>
+                      </g>
+                    </svg>
+                </div>
+                <div class="hero-name">아르테미스 계획</div>
+                <div class="hero-sub">반세기 만에 다시 달로</div>
+            </section>
+
+            <section class="panel c5">
+                <h2 class="panel-title"><span>KEY FIGURES</span><span>핵심 숫자</span></h2>
+                <div class="stats">
+                    <div class="stat"><div class="stat-num"><span class="count">98</span><small>m</small></div><div class="stat-label">SLS 로켓 높이</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">406,771</span><small>km</small></div><div class="stat-label">2호가 간 가장 먼 거리 (인류 최고 기록)</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">4</span><small>명</small></div><div class="stat-label">2호 승무원</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count" data-plain>2028</span><small>년</small></div><div class="stat-label">첫 유인 달 착륙 목표 (4호)</div></div>
+                </div>
+            </section>
+
+            <section class="panel c3">
+                <h2 class="panel-title"><span>MISSION PLAN</span><span>단계별 계획</span></h2>
+                <ul class="checklist">
+                    <li><span class="ok">[OK]</span>1호: 무인 시험 비행 (2022)</li>
+                    <li><span class="ok">[OK]</span>2호: 유인 달 근접 비행 (2026)</li>
+                    <li><span class="next">[..]</span>3호: 지구 궤도에서 착륙선 도킹 시험 (2027 예정)</li>
+                    <li><span class="next">[..]</span>4호: 유인 달 남극 착륙 (2028 목표)</li>
+                    <li><span class="next">[..]</span>이후 해마다 달 착륙 (목표)</li>
+                </ul>
+            </section>
+
+            <section class="panel c7 brief">
+                <h2 class="panel-title"><span>BRIEFING</span><span>개요</span></h2>
+                <p>아르테미스 계획은 아폴로 이후 반세기 만에 사람을 다시 달에 보내기 위한 NASA의 유인 달 탐사 계획이다. 이름은 그리스 신화에서 아폴로의 쌍둥이 누이인 달의 여신 아르테미스에서 따왔다. 새 대형 로켓 <button type="button" class="term" data-term="sls">SLS</button>와 유인 우주선 <button type="button" class="term" data-term="orion">오리온</button>을 쓰고, 달 표면에 내려갈 때는 민간 기업이 만드는 <button type="button" class="term" data-term="hls">유인 착륙선</button>을 이용한다.</p>
+                <p>목표는 잠깐 다녀오는 데 그치지 않고, 얼음이 있을 것으로 보이는 <button type="button" class="term" data-term="southpole">달 남극</button>에 오래 머무는 것이다. 2022년 무인 시험 비행에 이어 2026년 4월 아르테미스 2호가 우주비행사 4명을 태우고 달 뒤편을 돌아왔다. 여러 나라가 함께하는 계획으로, 한국도 2021년 <button type="button" class="term" data-term="accords">아르테미스 약정</button>에 서명해 참여하고 있다.</p>
+            </section>
+
+            <section class="panel c5">
+                <h2 class="panel-title"><span>HEIGHT COMPARE</span><span>높이 비교</span></h2>
+                <div class="heights">
+                    <div class="h-col me"><span class="h-val">98m</span><div class="h-bar" style="--h: 78%"></div><span class="h-name">SLS<br>(아르테미스)</span></div>
+                    <div class="h-col"><span class="h-val">110.6m</span><div class="h-bar" style="--h: 88%"></div><span class="h-name">새턴 V<br>(아폴로)</span></div>
+                    <div class="h-col"><span class="h-val">105.3m</span><div class="h-bar" style="--h: 84%"></div><span class="h-name">소련 N1</span></div>
+                    <div class="h-col"><span class="h-val">70m</span><div class="h-bar" style="--h: 56%"></div><span class="h-name">팰컨 9</span></div>
+                </div>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>ARTEMIS II CREW</span><span>2호 승무원</span></h2>
+                <dl class="spec-list">
+                    <dt>리드 와이즈먼</dt><dd>사령관 · NASA</dd>
+                    <dt>빅터 글로버</dt><dd>조종사 · NASA — 달을 돌아온 첫 유색인</dd>
+                    <dt>크리스티나 코크</dt><dd>임무 전문가 · NASA — 달을 돌아온 첫 여성</dd>
+                    <dt>제러미 핸슨</dt><dd>임무 전문가 · 캐나다 우주국 — 달을 돌아온 첫 비미국인</dd>
+                </dl>
+                <p class="note">오리온 우주선 이름은 승무원이 지은 '인테그리티(Integrity)'</p>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>RECORDS</span><span>비행 기록</span></h2>
+                <dl class="spec-list">
+                    <dt>1호 비행</dt><dd>약 25.5일, 무인</dd>
+                    <dt>1호 최대 거리</dt><dd>지구에서 432,210km (사람이 탈 수 있는 우주선 최고 기록)</dd>
+                    <dt>2호 비행</dt><dd>9일 1시간 32분, 유인</dd>
+                    <dt>2호 최대 거리</dt><dd>406,771km — 아폴로 13호(400,171km)를 넘은 인류 최고 기록</dd>
+                    <dt>2호 달 최근접</dt><dd>달 뒷면 상공 약 6,545km</dd>
+                </dl>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>MISSION LOG</span><span>주요 기록 (UTC)</span></h2>
+                <ol class="timeline">
+                    <li><time>2019.05</time>NASA, 달 귀환 계획 이름을 '아르테미스'로 발표</li>
+                    <li><time>2020.10.13</time>아르테미스 약정 첫 서명 (8개국)</li>
+                    <li><time>2021.05.27</time>한국, 열 번째로 아르테미스 약정 서명</li>
+                    <li class="key"><time>2022.11.16 06:47</time>아르테미스 1호 발사 (무인), 오리온이 달 궤도를 돌고 귀환</li>
+                    <li><time>2022.12.11 17:40</time>오리온 태평양 착수, 약 25.5일 비행 마침</li>
+                    <li class="key"><time>2026.04.01 22:35</time>아르테미스 2호 발사, 우주비행사 4명 탑승</li>
+                    <li class="key"><time>2026.04.06 23:00</time>달 뒷면 근접 비행, 인류가 지구에서 가장 멀리 간 기록 경신</li>
+                    <li><time>2026.04.11 00:07</time>태평양 착수, 무사 귀환</li>
+                    <li><time>2027 (예정)</time>아르테미스 3호: 지구 궤도에서 상업용 착륙선과 도킹 시험</li>
+                    <li><time>2028 (목표)</time>아르테미스 4호: 아폴로 이후 첫 유인 달 착륙</li>
+                </ol>
+                <p class="note">날짜·시각은 세계 표준시(UTC) 기준 · 시각 옆 작은 글씨는 한국 시간(UTC+9)</p>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>ARCHIVE PHOTOS</span><span>기록 사진</span></h2>
+                <div class="gallery">
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AArtemis_I_Launch_%28NHQ202211160017%29.jpg" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/artemis-1.jpg" alt="아르테미스 1호 발사 (2022)" loading="lazy"></a>
+                        <figcaption class="caption">아르테미스 1호 발사 (2022)<span class="credit">NASA / Joel Kowsky · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AArtemis_I_Flight_Day_13-_Orion%2C_Earth%2C_and_Moon_%28art001e000675%29.jpeg" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/artemis-2.jpg" alt="1호 오리온에서 본 지구와 달 (2022)" loading="lazy"></a>
+                        <figcaption class="caption">1호 오리온에서 본 지구와 달 (2022)<span class="credit">NASA · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AArtemis_II_Launch_%28KSC-04012026-Artemis_II_Launch-5%29.jpg" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/artemis-3.jpg" alt="아르테미스 2호 발사 (2026)" loading="lazy"></a>
+                        <figcaption class="caption">아르테미스 2호 발사 (2026)<span class="credit">NASA / Brandon Hancock · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AOrion_Seen_with_the_Moon_and_Earth_%28art002e016281%29.jpg" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/artemis-4.jpg" alt="2호 오리온에서 본 달과 지구 (2026)" loading="lazy"></a>
+                        <figcaption class="caption">2호 오리온에서 본 달과 지구 (2026)<span class="credit">NASA · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>REFERENCES</span><span>참고 자료</span></h2>
+                <ul class="ref-list">
+                    <li><a href="https://ko.wikipedia.org/wiki/아르테미스_계획" target="_blank" rel="noopener">아르테미스 계획 ↗</a><span class="ref-src">위키백과 (한국어)</span></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Artemis_program" target="_blank" rel="noopener">Artemis program ↗</a><span class="ref-src">위키백과 (영어)</span></li>
+                    <li><a href="https://www.nasa.gov/humans-in-space/artemis/" target="_blank" rel="noopener">Artemis ↗</a><span class="ref-src">NASA</span></li>
+                    <li><a href="https://www.nasa.gov/mission/artemis-i/" target="_blank" rel="noopener">Artemis I ↗</a><span class="ref-src">NASA</span></li>
+                    <li><a href="https://www.nasa.gov/mission/artemis-ii/" target="_blank" rel="noopener">Artemis II ↗</a><span class="ref-src">NASA</span></li>
+                    <li><a href="https://www.nasa.gov/news-release/nasa-welcomes-record-setting-artemis-ii-moonfarers-back-to-earth/" target="_blank" rel="noopener">NASA Welcomes Record-Setting Artemis II Moonfarers Back to Earth ↗</a><span class="ref-src">NASA 보도자료 (2026)</span></li>
+                    <li><a href="https://www.nasa.gov/news-release/nasa-marches-toward-artemis-iii-mission-in-2027-names-crew-members/" target="_blank" rel="noopener">NASA Marches Toward Artemis III Mission in 2027, Names Crew Members ↗</a><span class="ref-src">NASA 보도자료 (2026)</span></li>
+                </ul>
+                <p class="note">사진 출처는 각 사진 아래에 표시 · 수치와 날짜는 공개 기록을 바탕으로 했으며, 자료에 따라 조금씩 다를 수 있음</p>
+            </section>
+        </div>
+
+        <nav class="nav-records" aria-label="다른 기록">
+            <a href="falcon9.html" class="nav-btn prev">◀ 스페이스X 팰컨 9</a>
+            <a href="korea-lander.html" class="nav-btn next">한국형 달 착륙선 ▶</a>
+        </nav>
+    </main>
+
+    <script src="../js/glossary.js"></script>
+    <script src="../js/detail.js"></script>
+</body>
+</html>

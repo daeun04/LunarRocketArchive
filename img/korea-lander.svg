@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="rocket-icon-img px-krlander" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="한국형 달 착륙선">
+                  <g class="stars">
+                    <path fill="#8fe8ff" d="M3 2h1v1h-1zM14 4h1v1h-1zM27 5h1v1h-1zM1 9h1v1h-1zM30 12h1v1h-1z"/>
+                  </g>
+                  <g class="earth">
+                    <path fill="#f4f6fa" d="M23 2h1v1h-1z"/>
+                    <path fill="#3a78d8" d="M24 2h2v1h-2zM22 3h5v1h-5zM23 4h3v1h-3z"/>
+                  </g>
+                  <g class="ground">
+                    <path fill="#d4dae4" d="M0 26h32v1h-32zM8 28h1v1h-1zM29 28h1v1h-1zM7 29h1v1h-1zM28 29h1v1h-1z"/>
+                    <path fill="#a7b0bf" d="M0 27h32v1h-32zM0 28h3v1h-3zM9 28h16v1h-16zM30 28h2v1h-2zM0 29h4v1h-4zM8 29h18v1h-18zM29 29h3v1h-3zM0 30h32v1h-32zM0 31h32v1h-32z"/>
+                    <path fill="#6b7487" d="M3 28h5v1h-5zM25 28h4v1h-4zM4 29h3v1h-3zM26 29h2v1h-2z"/>
+                  </g>
+                  <g class="dust">
+                    <path fill="#a7b0bf" d="M4 24h1v1h-1zM27 24h1v1h-1zM5 25h1v1h-1zM26 25h1v1h-1z"/>
+                    <path fill="#d4dae4" d="M2 25h1v1h-1zM29 25h1v1h-1z"/>
+                  </g>
+                  <g class="rover">
+                    <path fill="#6b7487" d="M27 22h1v1h-1zM26 25h1v1h-1zM29 25h1v1h-1z"/>
+                    <path fill="#d4dae4" d="M28 22h1v1h-1zM26 24h4v1h-4z"/>
+                    <path fill="#f4f6fa" d="M26 23h4v1h-4z"/>
+                  </g>
+                  <g class="craft">
+                    <g class="thrust">
+                      <path fill="#ff8a1f" d="M14 22h1v1h-1zM16 22h1v1h-1zM15 24h1v1h-1z"/>
+                      <path fill="#ffd23f" d="M15 22h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1z"/>
+                      <path fill="#fffbe6" d="M15 23h1v1h-1z"/>
+                    </g>
+                    <g class="lander">
+                      <path fill="#d4dae4" d="M15 10h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM10 14h11v1h-11z"/>
+                      <path fill="#a7b0bf" d="M15 11h1v1h-1z"/>
+                      <path fill="#6b7487" d="M15 12h1v1h-1zM9 20h1v1h-1zM14 20h3v1h-3zM21 20h1v1h-1zM8 21h1v1h-1zM22 21h1v1h-1zM7 22h1v1h-1zM23 22h1v1h-1zM6 23h1v1h-1zM24 23h1v1h-1zM6 24h1v1h-1zM24 24h1v1h-1zM5 25h3v1h-3zM23 25h3v1h-3z"/>
+                      <path fill="#f4f6fa" d="M10 13h11v1h-11z"/>
+                      <path fill="#e8b923" d="M10 15h4v1h-4zM15 15h5v1h-5zM10 16h4v1h-4zM16 16h4v1h-4zM10 17h4v1h-4zM16 17h4v1h-4zM10 18h10v1h-10z"/>
+                      <path fill="#b07d12" d="M14 15h1v1h-1zM20 15h1v1h-1zM20 16h1v1h-1zM20 17h1v1h-1zM20 18h1v1h-1zM10 19h10v1h-10z"/>
+                      <path fill="#e0403a" d="M14 16h2v1h-2z"/>
+                      <path fill="#3a78d8" d="M14 17h2v1h-2z"/>
+                      <path fill="#5a6070" d="M14 21h3v1h-3z"/>
+                    </g>
+                  </g>
+</svg>

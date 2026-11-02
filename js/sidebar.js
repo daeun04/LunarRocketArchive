@@ -4,6 +4,8 @@
 // - 하위 항목(1960년대 등)을 누르면 그 묶음만 보여줌
 // 목록은 각 카드의 data-year / data-type / data-country 값으로 자동 생성되므로,
 // 카드를 새로 추가할 때 이 세 값만 적어주면 됨.
+// 헤더의 ALL / SUCCESS / FAIL 버튼은 주소 끝(#all, #success, #failure)으로 동작해서
+// 상세 페이지에서 눌러도 홈으로 돌아와 바로 걸러진 상태로 보임 (카드의 data-status 사용)
 
 const view = document.getElementById('archive-view');
 const archiveCards = Array.from(view.querySelectorAll('.rocket-card')); // 처음 순서 기억
@@ -40,10 +42,47 @@ function makeGrid(list) {
   return grid;
 }
 
+// 헤더 ALL / SUCCESS / FAIL 버튼
+const STATUS_VIEWS = {
+  success: { label: '성공한 기록', match: (card) => card.dataset.status === 'success' }, // 발사 전 계획(planned)은 제외
+  failure: { label: '실패한 기록', match: (card) => card.dataset.status === 'fail' },
+};
+const statusLinks = document.querySelectorAll('.header-nav .nav-btn');
+
+function markStatus(name) {
+  statusLinks.forEach((a) => {
+    if (a.getAttribute('href') === `#${name}`) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+}
+
+// 사이드바·전체 보기로 바꾸면 주소 끝의 #success 등을 지움 (새로고침해도 그 보기로 남지 않게)
+function clearHash() {
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+}
+
 function showAll() {
   view.replaceChildren(makeGrid(archiveCards));
   viewBar.hidden = true;
   markCurrent(sidebar.querySelector('.sidebar-all'));
+  markStatus('all');
+}
+
+function showStatus(name) {
+  const { label, match } = STATUS_VIEWS[name];
+  const list = archiveCards.filter(match);
+  view.replaceChildren(makeGrid(list));
+  viewLabel.textContent = `${label} ${list.length}`;
+  viewBar.hidden = false;
+  markCurrent(null);
+  markStatus(name);
+}
+
+// 주소 끝(#success 등)에 맞춰 보기 바꾸기
+function applyHash() {
+  const name = location.hash.slice(1);
+  if (STATUS_VIEWS[name]) showStatus(name);
+  else showAll();
 }
 
 function showGrouped(key, only) {
@@ -66,6 +105,7 @@ function showGrouped(key, only) {
     ? `[data-group="${key}"][data-value="${only}"]`
     : `.sidebar-group-title[data-group="${key}"]`;
   markCurrent(sidebar.querySelector(selector));
+  markStatus(null);
 }
 
 function markCurrent(button) {
@@ -136,7 +176,14 @@ sidebar.addEventListener('click', (e) => {
   const { group, value } = button.dataset;
   if (group === 'all') showAll();
   else showGrouped(group, value);
+  clearHash();
   closeSidebar();
 });
 
-document.querySelector('.view-reset').addEventListener('click', showAll);
+document.querySelector('.view-reset').addEventListener('click', () => {
+  showAll();
+  clearHash();
+});
+
+window.addEventListener('hashchange', applyHash);
+applyHash();

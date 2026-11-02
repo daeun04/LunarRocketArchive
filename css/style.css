@@ -125,6 +125,8 @@ body {
   transition: all 0.3s;
 }
 
+/* 지금 보고 있는 보기 (ALL / SUCCESS / FAIL) */
+.nav-btn[aria-current="page"],
 .nav-btn:hover {
   background-color: #00ffcc;
   color: #0b0f19;
@@ -960,6 +962,112 @@ body {
   .rocket-card p {
     font-size: 0.82rem;
   }
+}
+
+/* 아르테미스(SLS): 흔들리며 이륙 → 양옆 흰색 부스터 2개가 떨어져 나가고 → 주황 코어만 위로 사라짐 → 아래에서 다시 등장 */
+.is-playing .px-artemis .rocket {
+  animation: artemis-launch 2.2s steps(1, end);
+}
+@keyframes artemis-launch {
+  0%   { transform: translate(0, 0); }
+  5%   { transform: translate(1px, 0); }
+  10%  { transform: translate(-1px, 0); }
+  15%  { transform: translate(1px, 0); }
+  20%  { transform: translate(0, 0); }
+  26%  { transform: translate(0, -1px); }
+  32%  { transform: translate(0, -2px); }
+  38%  { transform: translate(0, -4px); }
+  44%  { transform: translate(0, -6px); }
+  50%  { transform: translate(0, -8px); }
+  56%  { transform: translate(0, -11px); }
+  62%  { transform: translate(0, -16px); }
+  68%  { transform: translate(0, -24px); }
+  73%  { transform: translate(0, -40px); }
+  76%  { transform: translate(0, 34px); }
+  84%  { transform: translate(0, 14px); }
+  92%  { transform: translate(0, 4px); }
+  100% { transform: translate(0, 0); }
+}
+.is-playing .px-artemis .srb-l {
+  animation: artemis-srb-l 2.2s steps(1, end);
+}
+.is-playing .px-artemis .srb-r {
+  animation: artemis-srb-r 2.2s steps(1, end);
+}
+@keyframes artemis-srb-l {
+  0%, 50% { transform: translate(0, 0); opacity: 1; }
+  54%  { transform: translate(-1px, 2px); }
+  58%  { transform: translate(-2px, 5px); }
+  62%  { transform: translate(-4px, 9px); opacity: 0.7; }
+  66%  { transform: translate(-6px, 15px); opacity: 0.4; }
+  70%  { opacity: 0; }
+  76%  { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+@keyframes artemis-srb-r {
+  0%, 50% { transform: translate(0, 0); opacity: 1; }
+  54%  { transform: translate(1px, 2px); }
+  58%  { transform: translate(2px, 5px); }
+  62%  { transform: translate(4px, 9px); opacity: 0.7; }
+  66%  { transform: translate(6px, 15px); opacity: 0.4; }
+  70%  { opacity: 0; }
+  76%  { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+/* 한국형 달 착륙선: 평소엔 착륙을 마치고 로버가 나와 있는 모습.
+   재생하면 엔진을 뿜으며 위에서 한 칸씩 내려와 착지 → 먼지가 일고 → 로버가 굴러 나옴 */
+.px-krlander .thrust,
+.px-krlander .dust {
+  opacity: 0;
+}
+.is-playing .px-krlander .craft {
+  animation: kr-descend 3s steps(1, end) forwards;
+}
+@keyframes kr-descend {
+  0%   { transform: translate(0, -16px); }
+  8%   { transform: translate(0, -13px); }
+  16%  { transform: translate(0, -10px); }
+  24%  { transform: translate(0, -8px); }
+  32%  { transform: translate(0, -6px); }
+  40%  { transform: translate(0, -4px); }
+  48%  { transform: translate(0, -3px); }
+  54%  { transform: translate(0, -2px); }
+  58%  { transform: translate(0, -1px); }
+  62%  { transform: translate(0, 0); }
+  100% { transform: translate(0, 0); }
+}
+.is-playing .px-krlander .thrust {
+  transform-origin: 16px 22px;
+  animation: px-flicker 0.24s steps(1, end) infinite,
+             kr-thrust 3s steps(1, end) forwards;
+}
+@keyframes kr-thrust {
+  0%   { opacity: 1; }
+  62%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.is-playing .px-krlander .dust {
+  animation: kr-dust 3s steps(1, end) forwards;
+}
+@keyframes kr-dust {
+  0%   { opacity: 0; }
+  60%  { opacity: 1; transform: translate(0, 0); }
+  68%  { transform: translate(0, -1px); }
+  76%  { opacity: 0.5; }
+  82%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.is-playing .px-krlander .rover {
+  animation: kr-rover 3s steps(1, end) forwards;
+}
+@keyframes kr-rover {
+  0%   { opacity: 0; transform: translate(-6px, 0); }
+  70%  { opacity: 1; transform: translate(-6px, 0); }
+  76%  { transform: translate(-4px, 0); }
+  84%  { transform: translate(-2px, 0); }
+  92%  { transform: translate(0, 0); }
+  100% { opacity: 1; transform: translate(0, 0); }
 }
 
 /* 움직임 줄이기 설정을 켠 사용자에게는 애니메이션을 끔 */

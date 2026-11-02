@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>한국형 달 착륙선 | Lunar Rocket Archive</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
+</head>
+<body class="detail-body">
+
+    <!-- 사이버펑크 무드 상단 헤더 (홈 화면과 동일, 로고를 누르면 홈으로) -->
+    <header class="cyber-header">
+        <div class="header-left">
+            <span class="pulse-dot"></span>
+            <h1><a href="../index.html" class="logo-link" aria-label="홈으로">PROJECT:<br>LUNAR<br>ARCHIVE</a></h1>
+        </div>
+        <nav class="header-nav">
+            <span class="status-text">SYSTEM: ONLINE</span>
+            <a href="../index.html#all" class="nav-btn">ALL</a>
+            <a href="../index.html#success" class="nav-btn">SUCCESS</a>
+            <a href="../index.html#failure" class="nav-btn">FAIL</a>
+        </nav>
+    </header>
+
+    <!-- 관제실 화면: 패널 배치는 css/detail.css, 동작은 js/detail.js -->
+    <main class="hud">
+        <div class="mission-bar mission-planned">
+            <span><span class="led"></span><b>FILE 08 // KOREA LUNAR LANDER</b></span>
+            <span>STATUS: <span class="status-planned">IN DEVELOPMENT</span></span>
+            <span>2024 – 2033 (사업 기간)</span>
+            <span>대한민국 · 우주항공청 / 한국항공우주연구원</span>
+            <span class="clock">UTC --:--:--</span>
+        </div>
+
+        <div class="hud-grid">
+            <section class="panel c4 hero-art">
+                <div class="hero-frame">
+                    <svg class="rocket-icon-img px-krlander" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="한국형 달 착륙선">
+                      <g class="stars">
+                        <path fill="#8fe8ff" d="M3 2h1v1h-1zM14 4h1v1h-1zM27 5h1v1h-1zM1 9h1v1h-1zM30 12h1v1h-1z"/>
+                      </g>
+                      <g class="earth">
+                        <path fill="#f4f6fa" d="M23 2h1v1h-1z"/>
+                        <path fill="#3a78d8" d="M24 2h2v1h-2zM22 3h5v1h-5zM23 4h3v1h-3z"/>
+                      </g>
+                      <g class="ground">
+                        <path fill="#d4dae4" d="M0 26h32v1h-32zM8 28h1v1h-1zM29 28h1v1h-1zM7 29h1v1h-1zM28 29h1v1h-1z"/>
+                        <path fill="#a7b0bf" d="M0 27h32v1h-32zM0 28h3v1h-3zM9 28h16v1h-16zM30 28h2v1h-2zM0 29h4v1h-4zM8 29h18v1h-18zM29 29h3v1h-3zM0 30h32v1h-32zM0 31h32v1h-32z"/>
+                        <path fill="#6b7487" d="M3 28h5v1h-5zM25 28h4v1h-4zM4 29h3v1h-3zM26 29h2v1h-2z"/>
+                      </g>
+                      <g class="dust">
+                        <path fill="#a7b0bf" d="M4 24h1v1h-1zM27 24h1v1h-1zM5 25h1v1h-1zM26 25h1v1h-1z"/>
+                        <path fill="#d4dae4" d="M2 25h1v1h-1zM29 25h1v1h-1z"/>
+                      </g>
+                      <g class="rover">
+                        <path fill="#6b7487" d="M27 22h1v1h-1zM26 25h1v1h-1zM29 25h1v1h-1z"/>
+                        <path fill="#d4dae4" d="M28 22h1v1h-1zM26 24h4v1h-4z"/>
+                        <path fill="#f4f6fa" d="M26 23h4v1h-4z"/>
+                      </g>
+                      <g class="craft">
+                        <g class="thrust">
+                          <path fill="#ff8a1f" d="M14 22h1v1h-1zM16 22h1v1h-1zM15 24h1v1h-1z"/>
+                          <path fill="#ffd23f" d="M15 22h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1z"/>
+                          <path fill="#fffbe6" d="M15 23h1v1h-1z"/>
+                        </g>
+                        <g class="lander">
+                          <path fill="#d4dae4" d="M15 10h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM10 14h11v1h-11z"/>
+                          <path fill="#a7b0bf" d="M15 11h1v1h-1z"/>
+                          <path fill="#6b7487" d="M15 12h1v1h-1zM9 20h1v1h-1zM14 20h3v1h-3zM21 20h1v1h-1zM8 21h1v1h-1zM22 21h1v1h-1zM7 22h1v1h-1zM23 22h1v1h-1zM6 23h1v1h-1zM24 23h1v1h-1zM6 24h1v1h-1zM24 24h1v1h-1zM5 25h3v1h-3zM23 25h3v1h-3z"/>
+                          <path fill="#f4f6fa" d="M10 13h11v1h-11z"/>
+                          <path fill="#e8b923" d="M10 15h4v1h-4zM15 15h5v1h-5zM10 16h4v1h-4zM16 16h4v1h-4zM10 17h4v1h-4zM16 17h4v1h-4zM10 18h10v1h-10z"/>
+                          <path fill="#b07d12" d="M14 15h1v1h-1zM20 15h1v1h-1zM20 16h1v1h-1zM20 17h1v1h-1zM20 18h1v1h-1zM10 19h10v1h-10z"/>
+                          <path fill="#e0403a" d="M14 16h2v1h-2z"/>
+                          <path fill="#3a78d8" d="M14 17h2v1h-2z"/>
+                          <path fill="#5a6070" d="M14 21h3v1h-3z"/>
+                        </g>
+                      </g>
+                    </svg>
+                </div>
+                <div class="hero-name">한국형 달 착륙선</div>
+                <div class="hero-sub">우리 기술로 달에 내려앉는 첫 도전</div>
+            </section>
+
+            <section class="panel c5">
+                <h2 class="panel-title"><span>KEY FIGURES</span><span>핵심 숫자</span></h2>
+                <div class="stats">
+                    <div class="stat"><div class="stat-num"><span class="count">1.8</span><small>t급</small></div><div class="stat-label">달 착륙선 무게</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">5,303</span><small>억 원</small></div><div class="stat-label">총사업비 (2024~2033)</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count" data-plain>2032</span><small>년</small></div><div class="stat-label">발사 목표 (차세대발사체)</div></div>
+                    <div class="stat"><div class="stat-num"><span class="count">10</span><small>일 이상</small></div><div class="stat-label">달 표면 임무 기간</div></div>
+                </div>
+            </section>
+
+            <section class="panel c3">
+                <h2 class="panel-title"><span>ROADMAP</span><span>단계별 계획</span></h2>
+                <ul class="checklist">
+                    <li><span class="ok">[OK]</span>1단계: 달 궤도선 다누리 발사 (2022)</li>
+                    <li><span class="ok">[OK]</span>2단계 예비타당성조사 통과 (2023)</li>
+                    <li><span class="ok">[OK]</span>개발 사업 협약, 착수 (2024)</li>
+                    <li><span class="next">[..]</span>착륙지 최종 선정 (2026년 말 예정)</li>
+                    <li><span class="next">[..]</span>연착륙 검증선 발사 (2032 상반기 목표)</li>
+                    <li><span class="next">[..]</span>달 착륙선 발사 (2032 하반기 목표)</li>
+                </ul>
+            </section>
+
+            <section class="panel c7 brief">
+                <h2 class="panel-title"><span>BRIEFING</span><span>개요</span></h2>
+                <p>한국형 달 착륙선은 우주항공청이 주관하고 한국항공우주연구원이 개발하는 '달 탐사 2단계' 사업이다. 2023년 <button type="button" class="term" data-term="pfs">예비타당성조사</button>를 통과했고, 2024년 10월 협약을 맺어 본격적으로 개발을 시작했다. 1.8톤급 착륙선을 우리 기술로 만들어 달 표면에 <button type="button" class="term" data-term="softlanding">연착륙</button>시키고, 과학·기술 임무를 수행하는 것이 목표다. 착륙선은 스스로 장애물을 찾아 피하며 정밀하게 내려앉도록 개발된다.</p>
+                <p>1단계인 달 궤도선 <button type="button" class="term" data-term="danuri">다누리</button>는 2022년부터 달 상공을 돌며 관측하고 있다. 착륙선은 개발 중인 <button type="button" class="term" data-term="kslv3">차세대발사체</button>에 실려 2032년 발사될 예정이며, 상반기에 연착륙 검증선을, 하반기에 본 착륙선을 보낸다. 이와 별도로, 민간이 주도하는 소형 달 착륙선을 2030년 초에 먼저 보내는 사업도 추진되고 있다.</p>
+            </section>
+
+            <section class="panel c5">
+                <h2 class="panel-title"><span>LANDING SITE</span><span>착륙 후보지</span></h2>
+                <dl class="spec-list">
+                    <dt>위도 범위</dt><dd>북위·남위 40~70° (2026년 3월 공청회)</dd>
+                    <dt>고른 이유</dt><dd>달 표면 임무 기간을 10일 이상 확보하고, 착륙선 운용과 과학 탐사가 비교적 안정적</dd>
+                    <dt>후보 예시</dt><dd>북반구: 가트너·앤디미온 충돌구, 라쿠스 모티스<br>남반구: 클라비우스·핑그레·마기누스 충돌구</dd>
+                    <dt>추가 분석</dt><dd>연착륙 검증선 9곳, 달 착륙선 20곳 검토 · 착륙선 1번 후보는 오에노피데스 분화구 (2026년 10월)</dd>
+                    <dt>최종 선정</dt><dd>2026년 말 예정</dd>
+                </dl>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>SCIENCE MISSION</span><span>주요 임무</span></h2>
+                <ul class="checklist">
+                    <li><span class="next">[01]</span>달 표면 먼지와 우주환경이 어떻게 영향을 주고받는지 규명</li>
+                    <li><span class="next">[02]</span>표면의 화학 조성과 자원 탐색</li>
+                    <li><span class="next">[03]</span>지형·지질 분석</li>
+                    <li><span class="next">[04]</span>연착륙 검증선: 우주환경·먼지 환경 관측</li>
+                    <li><span class="next">[05]</span>달 착륙선: 광물·휘발성 물질·금속 등 자원 탐사</li>
+                </ul>
+                <p class="note">탑재체(과학 장비)는 착륙지와 함께 결정될 예정</p>
+            </section>
+
+            <section class="panel c6">
+                <h2 class="panel-title"><span>PHASE 1 · DANURI</span><span>1단계 다누리</span></h2>
+                <dl class="spec-list">
+                    <dt>발사</dt><dd>2022.08.04 23:08 UTC (한국 8월 5일), 미국 케이프커내버럴에서 팰컨 9로</dd>
+                    <dt>무게</dt><dd>678kg (본체와 탑재체 6종)</dd>
+                    <dt>탑재체</dt><dd>한국 장비 5종 + NASA <button type="button" class="term" data-term="shadowcam">섀도캠</button></dd>
+                    <dt>달 궤도 진입</dt><dd>2022년 12월 말, 한국은 7번째 달 탐사국이 됨</dd>
+                    <dt>임무 연장</dt><dd>2027년까지 (2025년 2월 결정), 2028년 3월 달 표면 충돌로 마무리 예정</dd>
+                </dl>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>MISSION LOG</span><span>주요 기록 (UTC)</span></h2>
+                <ol class="timeline">
+                    <li class="key"><time>2022.08.04 23:08</time>달 궤도선 다누리 발사</li>
+                    <li><time>2022.12.27</time>다누리 달 임무 궤도 진입 성공 확인</li>
+                    <li><time>2023.10</time>달 탐사 2단계(달 착륙선) 예비타당성조사 통과, 총사업비 5,303억 원</li>
+                    <li class="key"><time>2024.10.30</time>우주항공청–한국항공우주연구원 사업 협약, 개발 착수</li>
+                    <li><time>2025.02.10</time>다누리 임무 기간 2027년까지 연장 결정</li>
+                    <li><time>2026.03.25</time>달 탐사 임무 수립 공청회: 착륙 지역 위도 40~70° 제시</li>
+                    <li><time>2026.04</time>소형 달 착륙선 사업, 예비타당성조사 대상 선정 (2030년 초 발사 목표)</li>
+                    <li><time>2026.10.30</time>착륙 후보지 분석 결과 공개 (검증선 9곳, 착륙선 20곳)</li>
+                    <li><time>2026 말 (예정)</time>착륙지 최종 선정</li>
+                    <li><time>2032 상반기 (목표)</time>연착륙 검증선 발사</li>
+                    <li class="key"><time>2032 하반기 (목표)</time>한국형 달 착륙선 발사</li>
+                </ol>
+                <p class="note">날짜·시각은 세계 표준시(UTC) 기준 · 시각 옆 작은 글씨는 한국 시간(UTC+9) · 계획 일정은 2026년 10월 발표 기준이며 바뀔 수 있음</p>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>ARCHIVE PHOTOS</span><span>기록 사진</span></h2>
+                <div class="gallery">
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AKorea_Pathfinder_Lunar_Orbiter_%28KPLO%29_Launches_from_Cape_Canaveral_Space_Force_Station_%287353885%29.jpeg" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/korea-lander-1.jpg" alt="다누리를 싣고 발사되는 팰컨 9 (2022)" loading="lazy"></a>
+                        <figcaption class="caption">다누리를 싣고 발사되는 팰컨 9 (2022)<span class="credit">U.S. Space Force / Joshua Conti · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AFirst_ShadowCam_image_from_orbit.png" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/korea-lander-2.png" alt="다누리에 실린 섀도캠의 첫 달 표면 사진" loading="lazy"></a>
+                        <figcaption class="caption">다누리에 실린 섀도캠의 첫 달 표면 사진<span class="credit">NASA / KARI / Arizona State University · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                    <figure class="photo-fig">
+                        <a href="https://commons.wikimedia.org/wiki/File%3AShadowCam-Shackleton-Crater-768x465.png" target="_blank" rel="noopener"><img class="photo-img" src="../img/photos/korea-lander-3.png" alt="섀도캠이 밝혀낸 영구 그림자 지역 (섀클턴 분화구)" loading="lazy"></a>
+                        <figcaption class="caption">섀도캠이 밝혀낸 영구 그림자 지역 (섀클턴 분화구)<span class="credit">NASA / KARI / Arizona State University · 퍼블릭 도메인</span></figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="panel c12">
+                <h2 class="panel-title"><span>REFERENCES</span><span>참고 자료</span></h2>
+                <ul class="ref-list">
+                    <li><a href="https://ko.wikipedia.org/wiki/한국형_달_착륙선" target="_blank" rel="noopener">한국형 달 착륙선 ↗</a><span class="ref-src">위키백과 (한국어)</span></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Korea_Lunar_Lander_and_Rover" target="_blank" rel="noopener">Korea Lunar Lander and Rover ↗</a><span class="ref-src">위키백과 (영어)</span></li>
+                    <li><a href="https://www.kyeonggi.com/article/20231031580301" target="_blank" rel="noopener">달 탐사 2단계 예비타당성조사 통과 (2023) ↗</a><span class="ref-src">경기일보</span></li>
+                    <li><a href="https://www.newsis.com/view/NISX20241104_0002945043" target="_blank" rel="noopener">우주청-항우연 달 탐사 2단계 사업 협약 (2024.11.04) ↗</a><span class="ref-src">뉴시스</span></li>
+                    <li><a href="https://view.asiae.co.kr/article/2026032509512666233" target="_blank" rel="noopener">&quot;2032년 달 착륙 추진&quot;…착륙지 &#x27;위도 40~70도&#x27; 제시 (2026.03.25) ↗</a><span class="ref-src">아시아경제</span></li>
+                    <li><a href="https://www.mt.co.kr/tech/2026/04/05/2026040515583536393" target="_blank" rel="noopener">민간 주도로 2030년 달 착륙선 보낸다 (2026.04.05) ↗</a><span class="ref-src">머니투데이</span></li>
+                    <li><a href="https://www.joongdo.co.kr/web/view.php?key=20261031010009237" target="_blank" rel="noopener">착륙 후보 1번은 오에노피데스 분화구 (2026.10.31) ↗</a><span class="ref-src">중도일보</span></li>
+                    <li><a href="https://www.newsis.com/view/NISX20221228_0002139877" target="_blank" rel="noopener">다누리, 달 궤도 진입 최종 성공 확인 (2022.12.28) ↗</a><span class="ref-src">뉴시스</span></li>
+                    <li><a href="https://mobile.newsis.com/view/NISX20250210_0003059502" target="_blank" rel="noopener">우주청, 다누리 임무 기간 2027년까지 추가 연장 (2025.02.10) ↗</a><span class="ref-src">뉴시스</span></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Danuri" target="_blank" rel="noopener">Danuri ↗</a><span class="ref-src">위키백과 (영어)</span></li>
+                </ul>
+                <p class="note">사진 출처는 각 사진 아래에 표시 · 수치와 날짜는 정부 발표와 언론 보도를 바탕으로 했으며, 자료에 따라 조금씩 다를 수 있음</p>
+            </section>
+        </div>
+
+        <nav class="nav-records" aria-label="다른 기록">
+            <a href="artemis.html" class="nav-btn prev">◀ 아르테미스 계획</a>
+        </nav>
+    </main>
+
+    <script src="../js/glossary.js"></script>
+    <script src="../js/detail.js"></script>
+</body>
+</html>
