@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>달 착륙지 3D 시뮬레이션 | Lunar Rocket Archive</title>
+    <meta name="description" content="1966년 루나 9호부터 최근 민간 착륙선까지, 인류의 달 착륙 지점을 3D 달 위에서 연도·국가·성공 여부별로 살펴보세요.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <!-- Three.js (ES 모듈): 버전 고정 -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body class="sim-body">
+
+    <!-- 사이버펑크 무드 상단 헤더 (홈 화면과 동일) -->
+    <header class="cyber-header">
+        <div class="header-left">
+            <span class="pulse-dot"></span>
+            <h1><a href="index.html" class="logo-link" aria-label="홈으로">PROJECT:<br>LUNAR<br>ARCHIVE</a></h1>
+        </div>
+        <nav class="header-nav">
+            <span class="status-text">SYSTEM: ONLINE</span>
+            <a href="index.html#all" class="nav-btn">ALL</a>
+            <a href="index.html#success" class="nav-btn">SUCCESS</a>
+            <a href="index.html#failure" class="nav-btn">FAIL</a>
+            <a href="landing.html" class="nav-btn nav-3d" aria-current="page">MOON 3D</a>
+        </nav>
+    </header>
+
+    <!-- 시뮬레이션: 장면은 js/landing.js(Three.js), 데이터는 data/landings.json -->
+    <main class="sim">
+
+        <!-- 미션 목록 = 리모컨: 누르면 카메라가 착륙지로 이동 -->
+        <aside class="sim-panel sim-list" aria-label="착륙 미션 목록">
+            <h2 class="sim-title"><span>MISSIONS</span><span class="list-count">--</span></h2>
+            <ol id="mission-list" class="mission-list"></ol>
+        </aside>
+
+        <!-- 3D 장면 -->
+        <section class="sim-stage" aria-label="지구-달 3D 장면">
+            <div id="sim-canvas" class="sim-canvas"></div>
+
+            <div class="stage-bar">
+                <span class="view-name">VIEW: <b id="view-label">EARTH–MOON</b></span>
+                <div class="stage-btns">
+                    <button type="button" class="sim-btn" data-view="system">지구–달</button>
+                    <button type="button" class="sim-btn" data-view="near">앞면</button>
+                    <button type="button" class="sim-btn" data-view="far">뒷면</button>
+                </div>
+            </div>
+
+            <p class="stage-hint" id="stage-hint">달을 클릭하면 확대됩니다</p>
+
+            <!-- 착륙지 정보 패널 (마커·목록을 누르면 표시) -->
+            <article class="sim-panel sim-info" id="sim-info" hidden aria-live="polite">
+                <button type="button" class="info-close" aria-label="정보 닫기">✕</button>
+                <h2 class="sim-title"><span>LANDING SITE</span><span id="info-side">--</span></h2>
+                <h3 id="info-name"></h3>
+                <p class="info-en" id="info-en"></p>
+                <dl class="info-grid">
+                    <dt>결과</dt><dd id="info-outcome"></dd>
+                    <dt>날짜</dt><dd id="info-date"></dd>
+                    <dt>국가</dt><dd id="info-country"></dd>
+                    <dt>운영</dt><dd id="info-agency"></dd>
+                    <dt>지점</dt><dd id="info-site"></dd>
+                    <dt>좌표</dt><dd id="info-coord"></dd>
+                </dl>
+                <p class="info-verdict" id="info-verdict" hidden></p>
+                <p class="info-note" id="info-note"></p>
+                <div class="info-near" id="info-near" hidden>
+                    <span>같은 지점</span>
+                    <div class="near-btns"></div>
+                </div>
+                <p class="info-src">출처: <span id="info-source"></span></p>
+                <a class="info-link" id="info-link" href="#" hidden></a>
+            </article>
+
+            <div class="sim-loading" id="sim-loading">
+                <span class="led"></span>LOADING LUNAR TEXTURES… <b id="load-pct">0%</b>
+            </div>
+
+            <p class="stage-note">궤적은 연출용 곡선이며 실제 궤도가 아닙니다 · 지구–달 거리와 크기 비율은 축소</p>
+        </section>
+
+        <!-- 연도 슬라이더 · 범례 -->
+        <section class="sim-panel sim-controls" aria-label="표시 조건">
+            <!-- 타임라인: 연도별 착륙 시도 막대(성공·부분·실패) + 슬라이더 -->
+            <div class="timeline">
+                <button type="button" class="sim-btn play-btn" id="play-btn" aria-label="연도 재생">▶</button>
+                <div class="year-readout">
+                    <span>YEAR</span>
+                    <b id="year-out">----</b>
+                    <small>까지 표시</small>
+                </div>
+                <div class="timeline-track">
+                    <div class="year-hist" id="year-hist"></div>
+                    <input type="range" id="year-range" min="1966" max="2025" step="1" value="2025" aria-label="표시할 마지막 연도">
+                    <div class="year-ticks" id="year-ticks" aria-hidden="true"></div>
+                </div>
+                <dl class="year-stats" id="year-stats">
+                    <div><dt>착륙 시도</dt><dd id="st-all">-</dd></div>
+                    <div class="st-success"><dt>성공</dt><dd id="st-success">-</dd></div>
+                    <div class="st-partial"><dt>부분</dt><dd id="st-partial">-</dd></div>
+                    <div class="st-fail"><dt>실패</dt><dd id="st-fail">-</dd></div>
+                </dl>
+            </div>
+
+            <div class="legend">
+                <div class="legend-group" id="country-legend" aria-label="국가 (눌러서 켜고 끄기)"></div>
+                <div class="legend-group outcome-legend">
+                    <span><i class="mk mk-success"></i>성공</span>
+                    <span><i class="mk mk-partial"></i>부분</span>
+                    <span><i class="mk mk-fail"></i>실패</span>
+                    <details class="criteria">
+                        <summary>판정 기준</summary>
+                        <ul>
+                            <li><i class="mk mk-success"></i><b>성공</b> 착륙 후 계획한 핵심 목표를 달성 (운영 기관 발표 기준 · 기울어졌어도 핵심 목표를 이뤘으면 성공)</li>
+                            <li><i class="mk mk-partial"></i><b>부분 성공</b> 착륙은 했지만 자세 이상·장비 고장으로 핵심 목표 일부를 이루지 못함</li>
+                            <li><i class="mk mk-fail"></i><b>실패</b> 추락하거나 교신이 끊겨 착륙하지 못함</li>
+                            <li class="legend-approx">* 좌표 표시가 '약'인 곳은 추락 지점 미확인 등 추정치</li>
+                        </ul>
+                    </details>
+                    <button type="button" class="sim-btn path-btn" id="path-btn" aria-pressed="false">모든 궤적</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="sim-credits">
+            달 텍스처·고도: <a href="https://svs.gsfc.nasa.gov/4720" target="_blank" rel="noopener">NASA's Scientific Visualization Studio</a> (CGI Moon Kit, LRO LROC/LOLA) ·
+            지구 텍스처: <a href="https://commons.wikimedia.org/wiki/File:Whole_world_-_land_and_oceans_12000.jpg" target="_blank" rel="noopener">NASA Blue Marble Next Generation</a> (NASA Goddard Space Flight Center, 퍼블릭 도메인) ·
+            구름: <a href="https://visibleearth.nasa.gov/images/57730" target="_blank" rel="noopener">NASA Blue Marble</a> (2002, 구름 포함 8192px 원본에서 구름만 추출) ·
+            은하수: <a href="https://svs.gsfc.nasa.gov/4851" target="_blank" rel="noopener">NASA's Scientific Visualization Studio</a> (Deep Star Maps 2020) ·
+            3D: <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a>
+        </footer>
+    </main>
+
+    <noscript><p class="sim-noscript">이 페이지는 JavaScript와 WebGL이 필요합니다.</p></noscript>
+    <script type="module" src="js/landing.js"></script>
+</body>
+</html>

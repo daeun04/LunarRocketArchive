@@ -27,6 +27,19 @@ function select(card) {
   cards.forEach((c) => c.classList.toggle('is-selected', c === card));
 }
 
+// 착륙 기록이 있는 카드: 아래쪽에 "착륙지 3D" 버튼 (data-landing = landing.html#미션id)
+// 카드를 눌렀을 때의 상세 페이지 이동·모션 재생과 겹치지 않게 클릭이 카드로 퍼지지 않도록 막음
+cards.forEach((card) => {
+  if (!card.dataset.landing) return;
+  const link = document.createElement('a');
+  link.className = 'card-3d-btn';
+  link.href = card.dataset.landing;
+  link.innerHTML = '<span aria-hidden="true">◉</span> ';
+  link.append(card.dataset.landingLabel || '착륙지 3D');
+  link.addEventListener('click', (e) => e.stopPropagation());
+  card.append(link);
+});
+
 if (canHover) {
   cards.forEach((card) => {
     card.addEventListener('mouseenter', () => card.classList.add('is-playing'));

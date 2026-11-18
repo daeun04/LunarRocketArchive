@@ -1,0 +1,848 @@
+/* ===== 달 착륙지 3D 시뮬레이션 (landing.html) =====
+   헤더·기본 글꼴은 style.css, 여기는 시뮬레이션 화면 배치와 패널만 */
+
+.sim-body {
+  background-color: #070a12;
+}
+
+/* 배치: 왼쪽 미션 목록 / 오른쪽 3D 장면 (같은 높이), 그 아래 전체 폭으로 타임라인·범례.
+   목록은 첫 줄에만 둠 → 목록이 길어도 아래 줄이 늘어나지 않고 목록 안에서 스크롤 */
+.sim {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-rows: minmax(460px, calc(100vh - 200px)) auto auto;
+  grid-template-areas:
+    "list stage"
+    "controls controls"
+    "credits credits";
+  gap: 14px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 16px 20px 28px;
+}
+.sim-list     { grid-area: list; }
+.sim-stage    { grid-area: stage; }
+.sim-controls { grid-area: controls; }
+.sim-credits  { grid-area: credits; }
+
+/* ----- 공통 패널 (상세 페이지 패널과 같은 모서리 괄호 장식) ----- */
+.sim-panel {
+  position: relative;
+  min-width: 0;
+  padding: 14px 16px;
+  background: rgba(12, 18, 32, 0.9);
+  border: 1px solid #00ffcc33;
+}
+.sim-panel::before,
+.sim-panel::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: solid #00ffcc;
+  pointer-events: none;
+}
+.sim-panel::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.sim-panel::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.sim-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #00ffcc33;
+  font-size: 0.72rem;
+  font-weight: normal;
+  letter-spacing: 2px;
+  color: #00ffcc;
+}
+.sim-title span:last-child {
+  color: #ff007f;
+}
+
+.sim-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  color: #fff;
+  background: rgba(7, 9, 15, 0.85);
+  border: 1px solid #00ffcc66;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.sim-btn:hover,
+.sim-btn[aria-pressed="true"] {
+  background: #00ffcc;
+  color: #0b0f19;
+  box-shadow: 0 0 10px #00ffcc;
+}
+.sim-btn:focus-visible,
+.mission-btn:focus-visible,
+.legend-chip:focus-visible {
+  outline: 2px solid #ff007f;
+  outline-offset: 2px;
+}
+
+/* ----- 미션 목록: 국가 색 점 + 이름 + 연도, 실패·부분만 작은 꼬리표 ----- */
+.sim-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-right: 8px;
+}
+.mission-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 6px 0 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #00ffcc44 transparent;
+}
+.mission-list .decade {
+  position: sticky;   /* 스크롤해도 지금 몇 년대인지 보이게 */
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 10px 8px 5px;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  color: #00ffcc;
+  background: rgba(12, 18, 32, 0.97);
+  border-bottom: 1px solid #00ffcc22;
+}
+.mission-list .decade:first-child {
+  padding-top: 2px;
+}
+.mission-list .decade span:last-child {
+  color: #6b7487;
+  letter-spacing: 0;
+}
+.mission-list .decade[hidden],
+.mission-list li[hidden] {
+  display: none;
+}
+.mission-btn {
+  display: grid;
+  grid-template-columns: 7px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 7px 8px;
+  font: inherit;
+  font-size: 0.82rem;
+  text-align: left;
+  color: #c4ccd8;
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.mission-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: var(--c);
+}
+.mission-btn[aria-current="true"] {
+  color: #fff;
+  background: rgba(0, 255, 204, 0.1);
+  border-left-color: var(--c);
+}
+.m-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 6px var(--c);
+}
+.m-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.m-tag {
+  font-size: 0.65rem;
+  padding: 1px 4px;
+  border: 1px solid currentColor;
+  line-height: 1.2;
+}
+.m-tag.tag-fail    { color: #ff4d7a; }
+.m-tag.tag-partial { color: #ffd23f; }
+.m-year {
+  font-size: 0.7rem;
+  color: #6b7487;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 마커 모양: 성공 = 꽉 찬 원, 부분 성공 = 반만 찬 원, 실패 = 속 빈 원에 X */
+.mk {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--c, #00ffcc);
+  box-sizing: border-box;
+  position: relative;
+  vertical-align: -1px;
+}
+.mk-success { background: var(--c, #00ffcc); }
+.mk-partial { background: linear-gradient(90deg, var(--c, #00ffcc) 50%, transparent 50%); }
+.mk-fail::before,
+.mk-fail::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  width: 2px;
+  height: 9px;
+  margin-left: -1px;
+  background: var(--c, #00ffcc);
+  transform: rotate(45deg);
+}
+.mk-fail::after { transform: rotate(-45deg); }
+
+/* ----- 3D 장면 ----- */
+.sim-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #00ffcc33;
+  background: #000;
+}
+.sim-canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: none;  /* 터치 드래그는 페이지 스크롤 대신 회전 */
+}
+.sim-canvas canvas {
+  display: block;
+}
+.sim-canvas.is-hover {
+  cursor: pointer;
+}
+
+.stage-bar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  pointer-events: none;
+}
+.stage-bar > * { pointer-events: auto; }
+.view-name {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: #a0aec0;
+  text-shadow: 0 0 4px #000;
+}
+.view-name b {
+  color: #00ffcc;
+}
+.stage-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.stage-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: #00ffcc;
+  border: 1px dashed #00ffcc66;
+  background: rgba(7, 9, 15, 0.7);
+  pointer-events: none;
+  white-space: nowrap;
+  animation: hint-blink 2s ease-in-out infinite;
+}
+.stage-hint[hidden] { display: none; }
+@keyframes hint-blink {
+  50% { opacity: 0.45; }
+}
+
+.stage-note {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  margin: 0;
+  font-size: 0.68rem;
+  color: #6b7487;
+  text-shadow: 0 0 4px #000;
+  pointer-events: none;
+}
+
+.sim-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: #00ffcc;
+  background: #000;
+  transition: opacity 0.6s;
+}
+.sim-loading.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+.sim-loading.is-error {
+  color: #ff0055;
+}
+.led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 8px #00ff88;
+  animation: led-blink 1.2s steps(1) infinite;
+}
+@keyframes led-blink {
+  50% { opacity: 0.25; }
+}
+
+/* 3D 위 이름표 (CSS2DRenderer) */
+.site-label {
+  padding: 3px 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  color: #fff;
+  white-space: nowrap;
+  background: rgba(7, 9, 15, 0.82);
+  border: 1px solid var(--c, #00ffcc);
+  box-shadow: 0 0 8px var(--c, #00ffcc);
+  transform: translateY(-18px);
+  pointer-events: none;
+}
+.body-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  color: #00ffcc;
+  text-shadow: 0 0 6px #00ffcc;
+  pointer-events: none;
+  transform: translateY(-14px);
+}
+
+/* ----- 정보 패널 ----- */
+.sim-info {
+  position: absolute;
+  top: 54px;
+  right: 10px;
+  width: min(320px, calc(100% - 20px));
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+  font-size: 0.85rem;
+}
+.sim-info[hidden] { display: none; }
+.info-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  font: inherit;
+  color: #a0aec0;
+  background: transparent;
+  border: 1px solid #00ffcc44;
+  cursor: pointer;
+  z-index: 1;
+}
+.info-close:hover {
+  color: #0b0f19;
+  background: #00ffcc;
+}
+.sim-info .sim-title {
+  padding-right: 34px;
+}
+.sim-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0 0 8px var(--c, #00ffcc);
+}
+.info-en {
+  margin: 2px 0 10px;
+  font-size: 0.75rem;
+  color: #6b7487;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 4px 10px;
+  margin: 0 0 10px;
+}
+.info-grid dt {
+  color: #6b7487;
+}
+.info-grid dd {
+  margin: 0;
+  color: #d4dae4;
+  word-break: keep-all;
+}
+.outcome-success { color: #00ff88; }
+.outcome-partial { color: #ffd23f; }
+.outcome-fail    { color: #ff0055; }
+.info-note {
+  margin: 0 0 8px;
+  line-height: 1.55;
+  color: #d4dae4;
+  word-break: keep-all;
+}
+/* 판정 근거 (성공/부분 성공이 헷갈릴 만한 미션만) */
+.info-verdict {
+  margin: 0 0 10px;
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #ffd23f;
+  border-left: 2px solid #ffd23f;
+  background: rgba(255, 210, 63, 0.06);
+  word-break: keep-all;
+}
+.info-verdict[hidden] { display: none; }
+/* 같은 자리에 겹친 다른 미션 */
+.info-near {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  color: #6b7487;
+}
+.info-near[hidden] { display: none; }
+.near-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.near-btn {
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  color: #fff;
+  background: transparent;
+  border: 1px solid var(--c, #00ffcc);
+  cursor: pointer;
+}
+.near-btn:hover {
+  background: var(--c, #00ffcc);
+  color: #0b0f19;
+}
+.info-src {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  color: #6b7487;
+}
+.info-link {
+  display: block;
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #0b0f19;
+  background: #00ffcc;
+  text-decoration: none;
+}
+.info-link:hover {
+  box-shadow: 0 0 12px #00ffcc;
+}
+.info-link[hidden] { display: none; }
+
+/* ----- 타임라인 (연도별 착륙 시도 막대 + 슬라이더) · 통계 · 범례 ----- */
+.timeline {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+.play-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 0.9rem;
+}
+.year-readout {
+  display: grid;
+  line-height: 1.1;
+  min-width: 78px;
+}
+.year-readout span {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #6b7487;
+}
+.year-readout b {
+  font-size: 1.7rem;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc;
+  font-variant-numeric: tabular-nums;
+}
+.year-readout small {
+  font-size: 0.68rem;
+  color: #6b7487;
+}
+
+/* 막대·눈금은 슬라이더 손잡이 가운데(양 끝 7px 안쪽)에 맞춰 배치 */
+.timeline-track {
+  --inset: 7px;
+  position: relative;
+  min-width: 0;
+}
+.year-hist {
+  position: relative;
+  height: 56px;
+  margin: 0 var(--inset);
+  border-bottom: 1px solid #00ffcc22;
+}
+.hist-bar {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+.hist-bar i {
+  display: block;
+  height: 10px;
+}
+.hist-bar .s { background: #00ff88; }
+.hist-bar .p { background: #ffd23f; }
+.hist-bar .f { background: #ff0055; }
+.hist-bar.is-future {
+  opacity: 0.18;
+}
+.hist-bar:hover i {
+  filter: brightness(1.3);
+  box-shadow: 0 0 8px currentColor;
+}
+.hist-bar:focus-visible {
+  outline: 2px solid #ff007f;
+  outline-offset: 2px;
+}
+/* 1977–2012 빈 구간 표시 */
+.hist-gap {
+  position: absolute;
+  bottom: 10px;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: #6b7487;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#year-range {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  --p: 100%;
+}
+#year-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(to right, #00ffcc var(--p), #ffffff1f var(--p));
+}
+#year-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #00ffcc;
+  border: 2px solid #0b0f19;
+  box-shadow: 0 0 10px #00ffcc;
+}
+#year-range::-moz-range-track {
+  height: 4px;
+  background: #ffffff1f;
+}
+#year-range::-moz-range-progress {
+  height: 4px;
+  background: #00ffcc;
+}
+#year-range::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ffcc;
+  border: 2px solid #0b0f19;
+  box-shadow: 0 0 10px #00ffcc;
+}
+#year-range:focus-visible {
+  outline: 2px solid #ff007f;
+  outline-offset: 2px;
+}
+.year-ticks {
+  position: relative;
+  height: 14px;
+  margin: 0 var(--inset);
+}
+.year-ticks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #6b7487;
+}
+
+.year-stats {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+}
+.year-stats > div {
+  min-width: 62px;
+  padding: 6px 10px;
+  text-align: center;
+  border: 1px solid #ffffff14;
+  background: rgba(7, 9, 15, 0.6);
+}
+.year-stats dt {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: #6b7487;
+}
+.year-stats dd {
+  margin: 2px 0 0;
+  font-size: 1.3rem;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.year-stats .st-success dd { color: #00ff88; }
+.year-stats .st-partial dd { color: #ffd23f; }
+.year-stats .st-fail dd    { color: #ff0055; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px 20px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #00ffcc33;
+  font-size: 0.78rem;
+}
+.legend-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  color: #a0aec0;
+}
+.outcome-legend .mk {
+  margin-right: 5px;
+}
+.legend-approx {
+  color: #6b7487;
+}
+.legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  font: inherit;
+  color: #d4dae4;
+  background: transparent;
+  border: 1px solid #ffffff22;
+  cursor: pointer;
+}
+.legend-chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 6px var(--c);
+}
+.legend-chip[aria-pressed="false"] {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+.path-btn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+/* 판정 기준: 누르면 범례 아래로 펼쳐짐 */
+.criteria {
+  position: relative;
+  font-size: 0.75rem;
+  color: #a0aec0;
+}
+.criteria summary {
+  cursor: pointer;
+  color: #00ffcc;
+  letter-spacing: 1px;
+  list-style: none;
+  padding: 3px 8px;
+  border: 1px dashed #00ffcc55;
+}
+.criteria summary::-webkit-details-marker { display: none; }
+.criteria summary::before { content: "? "; }
+.criteria[open] summary {
+  background: rgba(0, 255, 204, 0.1);
+}
+.criteria ul {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);   /* 패널 아래가 페이지 끝이라 위쪽으로 펼침 */
+  z-index: 5;
+  width: min(420px, 80vw);
+  list-style: none;
+  margin: 0;
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+  background: rgba(7, 9, 15, 0.97);
+  border: 1px solid #00ffcc55;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+.criteria li {
+  line-height: 1.5;
+  word-break: keep-all;
+}
+.criteria .mk {
+  margin-right: 6px;
+}
+.criteria b {
+  margin-right: 6px;
+  color: #fff;
+  font-weight: normal;
+}
+
+.sim-credits {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: #6b7487;
+}
+.sim-credits a {
+  color: #8fe8ff;
+}
+.sim-noscript {
+  padding: 20px;
+  color: #ff0055;
+  text-align: center;
+}
+
+/* ----- 태블릿 이하: 장면 → 조건 → 목록 순으로 한 줄씩 ----- */
+@media (max-width: 900px) {
+  .sim {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "stage"
+      "controls"
+      "list"
+      "credits";
+    padding: 12px 12px 24px;
+  }
+  .sim-stage {
+    height: 62vh;
+    min-height: 380px;
+  }
+  .mission-list {
+    max-height: 50vh;
+  }
+  /* 타임라인: [재생·연도·통계] 한 줄, 그 아래 막대+슬라이더 전체 폭 */
+  .timeline {
+    grid-template-columns: auto auto 1fr;
+    gap: 12px 14px;
+  }
+  .timeline-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .year-stats {
+    justify-self: end;
+  }
+  .criteria ul {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* ----- 휴대폰 ----- */
+@media (max-width: 640px) {
+  .sim {
+    padding: 10px 0 20px;
+    gap: 10px;
+  }
+  .sim-stage,
+  .sim-panel {
+    border-left: 0;
+    border-right: 0;
+  }
+  .sim-panel,
+  .sim-credits {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .sim-btn {
+    padding: 6px 9px;
+  }
+  /* 정보 패널은 장면 아래쪽에서 올라오는 시트로 */
+  .sim-info {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+    max-height: 58%;
+  }
+  .stage-hint {
+    bottom: 44px;
+  }
+  .stage-note {
+    font-size: 0.62rem;
+  }
+  .year-stats > div {
+    min-width: 0;
+    padding: 4px 7px;
+  }
+  .year-stats dd {
+    font-size: 1rem;
+  }
+  .year-readout {
+    min-width: 0;
+  }
+  .year-readout b {
+    font-size: 1.3rem;
+  }
+  .hist-gap {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-hint,
+  .led {
+    animation: none;
+  }
+}

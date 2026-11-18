@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lunar Rocket Archive</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- 홈 3D 달 미리보기용 Three.js (버전 고정) -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+    }
+    </script>
 </head>
 <body class="home-body">
 
@@ -19,6 +27,7 @@
             <a href="#all" class="nav-btn">ALL</a>
             <a href="#success" class="nav-btn">SUCCESS</a>
             <a href="#failure" class="nav-btn">FAIL</a>
+            <a href="landing.html" class="nav-btn nav-3d">MOON 3D</a>
         </nav>
     </header>
 
@@ -33,8 +42,32 @@
     </aside>
     <div class="sidebar-backdrop"></div>
 
+    <!-- 메인 히어로: 천천히 도는 3D 달 미리보기 → 착륙지 시뮬레이션(landing.html)으로. 동작은 js/home-moon.js -->
+    <section class="moon-hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <p class="hero-kicker"><span class="hero-led"></span>3D SIMULATION · 1966–2025</p>
+            <h2 id="hero-title">MOON LANDING <b>MAP</b></h2>
+            <p class="hero-desc">1966년 루나 9호부터 최근 민간 착륙선까지. 3D 달을 직접 돌려 보며 착륙 지점을 찾고, 지구에서 날아가는 궤적을 따라가 보세요.</p>
+            <dl class="hero-stats">
+                <div><dt>착륙 시도</dt><dd data-stat="all">37</dd></div>
+                <div><dt>성공</dt><dd data-stat="success">25</dd></div>
+                <div><dt>국가</dt><dd data-stat="countries">7</dd></div>
+                <div><dt>뒷면 착륙</dt><dd data-stat="far">2</dd></div>
+            </dl>
+            <div class="hero-actions">
+                <a class="hero-cta" href="landing.html">3D 착륙지 탐험 시작 <span aria-hidden="true">→</span></a>
+                <a class="hero-sub" href="#archive" data-scroll>로켓 아카이브 보기 <span aria-hidden="true">↓</span></a>
+            </div>
+        </div>
+        <a class="hero-moon" href="landing.html" aria-label="3D 착륙지 시뮬레이션 열기">
+            <div class="hero-canvas" id="hero-canvas"></div>
+            <span class="hero-readout">▸ 점 위에 마우스를 올려 보세요</span>
+            <span class="hero-enter">ENTER SIMULATION ↗</span>
+        </a>
+    </section>
+
     <!-- 본문: 왼쪽 좁은 세로줄엔 사이드바 열기 버튼만, 오른쪽에 제목·카드 -->
-    <div class="page-body">
+    <div class="page-body" id="archive">
     <div class="sidebar-rail">
         <button type="button" class="sidebar-toggle" aria-controls="archive-sidebar" aria-expanded="false" aria-label="분류 사이드바 열기">
             <span class="toggle-bars" aria-hidden="true"></span>
@@ -83,7 +116,7 @@
             </div>
 
             <!-- 카드 2: 루나 탐사선 -->
-            <div class="rocket-card" data-year="1959" data-type="무인 탐사선" data-country="소련" data-status="success" data-detail="detail/luna.html" data-aos="fade-up">
+            <div class="rocket-card" data-year="1959" data-type="무인 탐사선" data-country="소련" data-status="success" data-detail="detail/luna.html" data-landing="landing.html#luna-9" data-landing-label="착륙지 3D" data-aos="fade-up">
                 <svg class="rocket-icon-img px-luna" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="루나 탐사선">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M27 3h1v1h-1zM11 6h1v1h-1zM3 14h1v1h-1zM29 14h1v1h-1zM8 19h1v1h-1z"/>
@@ -123,7 +156,7 @@
             </div>
 
             <!-- 카드 3: 새턴 V -->
-            <div class="rocket-card" data-year="1967" data-type="로켓" data-country="미국" data-status="success" data-detail="detail/saturn5.html" data-aos="fade-up">
+            <div class="rocket-card" data-year="1967" data-type="로켓" data-country="미국" data-status="success" data-detail="detail/saturn5.html" data-landing="landing.html#apollo-11" data-landing-label="아폴로 착륙지 3D" data-aos="fade-up">
                 <svg class="rocket-icon-img px-saturn" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="새턴 V">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M3 4h1v1h-1zM27 6h1v1h-1zM26 15h1v1h-1zM5 18h1v1h-1zM29 26h1v1h-1z"/>
@@ -205,7 +238,7 @@
             </div>
 
             <!-- 카드 5: 아폴로 미션 -->
-            <div class="rocket-card" data-year="1969" data-type="유인 우주선" data-country="미국" data-status="success" data-detail="detail/apollo.html" data-aos="fade-up">
+            <div class="rocket-card" data-year="1969" data-type="유인 우주선" data-country="미국" data-status="success" data-detail="detail/apollo.html" data-landing="landing.html#apollo-11" data-landing-label="착륙지 3D" data-aos="fade-up">
                 <svg class="rocket-icon-img px-apollo" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="아폴로 미션, 달 위를 걷는 두 우주비행사">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M5 1h1v1h-1zM16 3h1v1h-1zM11 5h1v1h-1zM28 8h1v1h-1zM2 9h1v1h-1zM1 14h1v1h-1zM31 16h1v1h-1z"/>
@@ -272,7 +305,7 @@
             </div>
 
             <!-- 카드 6: 팰컨 9 -->
-            <div class="rocket-card" data-year="2010" data-type="로켓" data-country="미국" data-status="success" data-detail="detail/falcon9.html">
+            <div class="rocket-card" data-year="2010" data-type="로켓" data-country="미국" data-status="success" data-detail="detail/falcon9.html" data-landing="landing.html#im-1" data-landing-label="보낸 착륙선 3D">
                 <svg class="rocket-icon-img px-falcon9" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="스페이스X 팰컨 9">
                   <g class="stars">
                     <path fill="#8fe8ff" d="M26 3h1v1h-1zM4 5h1v1h-1zM25 12h1v1h-1zM7 16h1v1h-1zM28 24h1v1h-1zM3 26h1v1h-1z"/>
@@ -398,5 +431,6 @@
 
     <script src="js/cards.js"></script>
     <script src="js/sidebar.js"></script>
+    <script type="module" src="js/home-moon.js"></script>
 </body>
 </html>
